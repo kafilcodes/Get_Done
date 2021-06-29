@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, User, UserCredential;
 import 'package:flutter/material.dart';
+import 'package:get_done/handler/LoginPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthClass {
@@ -51,8 +52,26 @@ class AuthClass {
     }
   }
 
-  signOutUser() async {
-    await auth.signOut();
+  signOutUser(BuildContext context) async {
+    await auth.signOut().whenComplete(
+          () => Navigator.pop(context),
+        );
+    await _googleSignIn.signOut();
     await _googleSignIn.disconnect();
+    await auth.currentUser!.reload().whenComplete(
+          () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginPage(),
+            ),
+          ),
+          // Navigator.pop(context),
+          //     Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => LoginPage(),
+          //   ),
+          // ),
+        );
   }
 }

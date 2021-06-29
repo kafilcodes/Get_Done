@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_done/handler/landingPage.dart';
 import 'package:get_done/services/notifications/firebase_notification_handler.dart';
+import 'package:get_done/services/others/loading.dart';
 import 'package:get_done/theme/app_theme_provider.dart';
 import 'package:get_done/theme/shared_utility.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';

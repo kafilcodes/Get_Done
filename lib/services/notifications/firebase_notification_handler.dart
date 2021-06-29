@@ -11,6 +11,16 @@ class FirebaseNotification {
   late FirebaseMessaging _messaging;
   late BuildContext myContext;
 
+  void dpnsubscribe() {
+    _messaging.subscribeToTopic("DailyPushNotification").whenComplete(
+        () => print("SUBSCRIBED TO DAILY PUSH PUSH NOTIFICATION"));
+  }
+
+  void dpnunsubscribe() {
+    _messaging.unsubscribeFromTopic("DailyPushNotification").whenComplete(
+        () => print("UN-SUBSCRIBED TO DAILY PUSH PUSH NOTIFICATION"));
+  }
+
   void setupFirebase(BuildContext context) {
     _messaging = FirebaseMessaging.instance;
     NotificationHandler.initNotification(context);

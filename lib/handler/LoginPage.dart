@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage>
   @override
   void initState() {
     super.initState();
+
     GoogleFonts.config;
 
     controller = AnimationController(
@@ -205,7 +206,7 @@ class _LoginPageState extends State<LoginPage>
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 7),
                     child: Text(
-                      "Sign with your email and password \n    or continue with social media . ",
+                      "Sign with your email and password \n    or continue with Google Sign In. ",
                       style: GoogleFonts.sourceSansPro(
                         color: Colors.white70,
                         fontStyle: FontStyle.italic,
@@ -245,7 +246,7 @@ class _LoginPageState extends State<LoginPage>
                               textDirection: TextDirection.ltr,
                               style: GoogleFonts.sourceSansPro(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 18,
                               ),
                               enableInteractiveSelection: true,
                               enableSuggestions: true,
@@ -333,7 +334,7 @@ class _LoginPageState extends State<LoginPage>
                               textDirection: TextDirection.ltr,
                               style: GoogleFonts.sourceSansPro(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 18,
                               ),
                               validator: (value) => value!.isEmpty
                                   ? "Password can't be empty"

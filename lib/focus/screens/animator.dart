@@ -9,6 +9,7 @@ import 'package:wave/wave.dart';
 import 'package:wakelock/wakelock.dart';
 
 late AnimationController controller;
+
 Duration parsedDuration(String s) {
   int hours = 0;
   int minutes = 0;

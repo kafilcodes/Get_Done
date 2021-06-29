@@ -74,14 +74,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   pinned: true,
                   centerTitle: true,
                   title: Text(
-                    "Hello , ${getuser.user!.email.toString()}",
-                    style: TextStyle(
-                      fontFamily: 'YellowL',
-                      color: Theme.of(context).iconTheme.color,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 24,
-                    ),
+                    "Get  Done",
+                    style: GoogleFonts.sourceSansPro(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).iconTheme.color,
+                        fontSize: 24),
                     maxLines: 1,
                   ),
                   actions: [
@@ -95,7 +93,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         );
                       },
                       icon: Icon(
-                        Icons.sort_sharp,
+                        Icons.segment,
                         color: Theme.of(context).iconTheme.color,
                         size: 30,
                       ),

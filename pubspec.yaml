@@ -72,7 +72,7 @@ flutter_native_splash:
   ios: true
   fullscreen : true
   android12 : true
-  android_gravity : fill
+  android_gravity : center
 
 
 

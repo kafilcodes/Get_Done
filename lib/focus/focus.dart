@@ -76,25 +76,16 @@ class _MyFocusPageState extends State<MyFocusPage> {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
+            var ds = snapshot.data!.docs;
+            Duration sum = const Duration();
+            for (int i = 0; i < ds.length; i++)
+              sum += parsedDuration(ds[i]['duration']);
             return SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Container(
-                    //   margin:
-                    //       EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    //   child: Text(
-                    //     "Tasks",
-                    //     style: TextStyle(
-                    //       fontWeight: FontWeight.w700,
-                    //       color: Colors.deepPurpleAccent,
-                    //       fontSize: 40,
-                    //       fontFamily: "WorkSans",
-                    //     ),
-                    //   ),
-                    // ),
                     const SizedBox(
                       height: 3,
                     ),
@@ -105,7 +96,7 @@ class _MyFocusPageState extends State<MyFocusPage> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       width: MediaQuery.of(context).size.width / 0.9,
-                      height: 77,
+                      height: 80,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(15.0),
@@ -118,8 +109,8 @@ class _MyFocusPageState extends State<MyFocusPage> {
                           Column(
                             children: [
                               Container(
-                                child: const Text(
-                                  "2.5 Hrs",
+                                child: Text(
+                                  "${sum.inMinutes.toString()} Min.",
                                   style: TextStyle(
                                     fontSize: 25,
                                     color: Colors.white,

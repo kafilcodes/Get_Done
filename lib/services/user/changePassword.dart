@@ -269,7 +269,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       validateAndSave();
                       await isInternet(context).whenComplete(
                         () => sendPassResetLink().whenComplete(() {
-                          AuthClass().signOutUser();
+                          AuthClass().signOutUser(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

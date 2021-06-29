@@ -9,7 +9,7 @@
     <application
         android:name=".Application"
 
-        android:label="get_done"
+        android:label="Get Done"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

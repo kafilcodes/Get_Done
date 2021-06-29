@@ -19,11 +19,4 @@ class Audio {
     player2.play();
     player2.setSpeed(2);
   }
-
-  static void playsound3() async {
-    await player3.setAsset("assets/sounds/notification1.wav");
-    player3.load();
-    player3.play();
-    player3.setSpeed(1);
-  }
 }

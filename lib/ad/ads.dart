@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:get_done/ad/ad_helper.dart';
 
@@ -54,9 +55,9 @@ class _MyNativeAdState extends State<MyNativeAd> {
             ad: _ad,
           )
         : const Center(
-            child: CircularProgressIndicator(
-              color: Colors.grey,
-              strokeWidth: 2,
+            child: SpinKitRipple(
+              color: Colors.red,
+              size: 35,
             ),
           );
   }

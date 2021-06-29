@@ -1,3 +1,4 @@
+import 'package:get_done/services/notifications/firebase_notification_handler.dart';
 import 'package:get_done/theme/app_theme_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/handler/LoginPage.dart';
@@ -22,6 +23,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   // ignore: non_constant_identifier_names
   bool DarkMode = false;
+  bool isSwitched = true;
 
   @override
   void initState() {
@@ -43,7 +45,12 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final _appThemeStateProvider = context.read(appThemeStateProvider.notifier);
-    List<String> settingString = ["Change Password", "Dark Mode", "Sign Out"];
+    List<String> settingString = [
+      "Change Password",
+      "Dark Mode",
+      "Push Notification",
+      "Sign Out",
+    ];
 
     List<Widget> settingTrailing = [
       IconButton(
@@ -65,6 +72,20 @@ class _SettingsPageState extends State<SettingsPage> {
           onChanged: (value) {
             _appThemeStateProvider.toggleAppTheme(context);
           }),
+      Switch.adaptive(
+        activeColor: Theme.of(context).iconTheme.color,
+// ignore: invalid_use_of_protected_member
+        value: isSwitched,
+        onChanged: (value) async {
+          isSwitched
+              ? FirebaseNotification().dpnsubscribe()
+              : FirebaseNotification().dpnunsubscribe();
+
+          setState(() {
+            isSwitched = !isSwitched;
+          });
+        },
+      ),
       IconButton(
         icon: Icon(
           Icons.logout,
@@ -72,13 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
           size: 32,
         ),
         onPressed: () async {
-          AuthClass().signOutUser();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginPage(),
-            ),
-          );
+          await AuthClass().signOutUser(context);
         },
       ),
     ];
@@ -172,19 +187,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 Container(
                   margin: const EdgeInsets.all(10),
                   width: double.infinity,
-                  height: 250,
+                  height: 310,
                   decoration: BoxDecoration(
                     color: Colors.black26,
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: ListView.builder(
-                      itemCount: 3,
+                      itemCount: settingString.length,
                       itemBuilder: (context, index) {
                         return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           child: ListTile(
                             title: Text(
                               settingString[index],
@@ -194,7 +209,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     .headline2!
                                     .color,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 22,
                               ),
                             ),
                             trailing: settingTrailing[index],
