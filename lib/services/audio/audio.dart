@@ -3,7 +3,6 @@ import 'package:just_audio/just_audio.dart' show AudioPlayer;
 class Audio {
   static late AudioPlayer player = AudioPlayer();
   static late AudioPlayer player2 = AudioPlayer();
-  static late AudioPlayer player3 = AudioPlayer();
 
   static void playsound() async {
     await player.setAsset("assets/sounds/3.wav");

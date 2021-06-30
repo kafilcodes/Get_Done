@@ -72,45 +72,6 @@ class _TodoWidgetState extends State<TodoWidget> {
               ),
             ),
             children: [
-              // ListView.builder(
-              //     itemCount: widget.docsnap["subtask"].length,
-              //     itemBuilder: (context, index) {
-              //       return ListTile(
-              //         title: Text(widget.docsnap["subtask"].index),
-              //       );
-              //     }),
-              // ListTile(
-              //   title: Text(
-              //     widget.docsnap["subtask"][0],
-              //     // ["tasks"]["title"],
-              //     maxLines: 2,
-              //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.sourceSansPro(
-              //       textStyle: const TextStyle(
-              //         overflow: TextOverflow.ellipsis,
-              //       ),
-              //       letterSpacing: 1.1,
-              //       fontStyle: FontStyle.italic,
-              //       color: Colors.white,
-              //       fontWeight: FontWeight.w400,
-              //       fontSize: 17,
-              //       decoration: widget.docsnap["subtask"]["tasks"]["completed"]
-              //           ? TextDecoration.lineThrough
-              //           : TextDecoration.none,
-              //     ),
-              //   ),
-              //   leading: Checkbox(
-              //     value: widget.docsnap["subtask"]["tasks"]["completed"],
-              //     onChanged: (value) {
-              //       HapticFeedback.mediumImpact()
-              //           .whenComplete(() => Audio.playsound2());
-              //
-              //       widget.docsnap.reference
-              //           .update({"subtask.tasks.completed": true});
-              //     },
-              //   ),
-              //   trailing: const SizedBox(),
-              // ),
               const SizedBox(
                 height: 5,
               ),
@@ -138,15 +99,15 @@ class _TodoWidgetState extends State<TodoWidget> {
                     const SizedBox(
                       width: 20,
                     ),
-                    // Text(
-                    //   widget.docsnap["subtask"]["desc"],
-                    //   maxLines: 2,
-                    //   textAlign: TextAlign.center,
-                    //   style: GoogleFonts.notoSans(
-                    //       fontSize: 14,
-                    //       fontStyle: FontStyle.italic,
-                    //       fontWeight: FontWeight.w200),
-                    // ),
+                    Text(
+                      widget.docsnap["desc"],
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.notoSans(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w200),
+                    ),
                   ],
                 ),
               )

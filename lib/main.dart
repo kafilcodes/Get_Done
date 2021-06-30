@@ -39,6 +39,8 @@ class MyApp extends ConsumerWidget {
             .getAppThemedata(context, _appThemeState),
         debugShowCheckedModeBanner: false,
         home: AnimatedSplashScreen(
+          duration: 1,
+          animationDuration: Duration(seconds: 1),
           splash: Image.asset("assets/images/ic_launcher.png"),
           nextScreen: LandingPage(),
           splashIconSize: 100,
@@ -53,7 +55,7 @@ class MyApp extends ConsumerWidget {
 Future<void> _backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   // ignore: avoid_print
-  print("Handle background service $message");
+
   dynamic data = message.data["data"];
   FirebaseNotification.showNotification(data["title"], data["body"]);
 }

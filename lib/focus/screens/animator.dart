@@ -44,7 +44,7 @@ class _AnimatorState extends State<Animator>
     super.initState();
     GoogleFonts.config;
     // ignore: avoid_print
-    print("Focus Page INIT");
+
     controller = AnimationController(
       vsync: this,
       duration: parsedDuration(widget.animDur["duration"]),
@@ -57,9 +57,6 @@ class _AnimatorState extends State<Animator>
 
     super.dispose();
     Wakelock();
-
-    // ignore: avoid_print
-    print("Animator Dispose");
   }
 
   _buildCard({
@@ -120,7 +117,6 @@ class _AnimatorState extends State<Animator>
               });
               Wakelock.toggle(enable: screenLock);
               // ignore: avoid_print
-              print("display on - $screenLock");
             },
             icon: Icon(
               Icons.brightness_7_sharp,

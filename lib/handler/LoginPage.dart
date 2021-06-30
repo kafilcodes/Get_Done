@@ -10,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get_done/services/user/changePassword.dart';
 import 'package:get_done/services/others/internet.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,10 +38,9 @@ class _LoginPageState extends State<LoginPage>
 
   Future<void> _loginUser() async {
     try {
-      print("Email - $_email and Password $_password");
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: _email, password: _password);
-      print("User - $userCredential");
+
       if (formKey.currentState!.validate()) {
         if (userCredential.user != null) {
           setState(() {
@@ -50,19 +50,22 @@ class _LoginPageState extends State<LoginPage>
         if (userCredential.user == null) {
           setState(() {
             Animate = false;
-            final snackbar =
-                SnackBar(content: const Text("Please Enter Valid Details"));
+            final snackbar = SnackBar(
+                backgroundColor: Colors.yellowAccent.withOpacity(0.8),
+                width: double.infinity,
+                duration: Duration(seconds: 2),
+                content: const Text("Please Enter Valid Details"));
             ScaffoldMessenger.of(context).showSnackBar(snackbar);
             loading = false;
           });
         }
       }
     } on FirebaseAuthException catch (e) {
-      print("Error - $e");
       setState(() {
         Animate = false;
         _error = e.message!;
         final snackbarError = SnackBar(
+          width: double.infinity,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(12),
@@ -97,7 +100,7 @@ class _LoginPageState extends State<LoginPage>
             ),
           ),
           backgroundColor: Colors.redAccent.withOpacity(0.7),
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
           behavior: SnackBarBehavior.floating,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackbarError);
@@ -106,7 +109,6 @@ class _LoginPageState extends State<LoginPage>
       setState(() {
         Animate = false;
       });
-      print("Error 'e' - $e");
     }
   }
 
@@ -119,10 +121,10 @@ class _LoginPageState extends State<LoginPage>
         Animate = true;
       });
       form.save();
-
-      print("form is valid");
     } else {
-      print("Form is Invalid");
+      showSimpleNotification(
+        Text("Invalid Details , Check and Try Again"),
+      );
     }
   }
 
@@ -136,7 +138,7 @@ class _LoginPageState extends State<LoginPage>
       vsync: this,
       duration: const Duration(seconds: 3),
     );
-    print("INIT - LoginPage");
+
     animation = controller.drive(TweenSequence<Color?>([
       TweenSequenceItem(
         weight: 1.0,
@@ -164,8 +166,14 @@ class _LoginPageState extends State<LoginPage>
     passwordController.dispose();
     controller.dispose();
     Animate;
+    animation;
+    showPass;
+    _error;
+    _email;
+    _password;
+    loading;
+
     super.dispose();
-    print("DISPOSE - LoginPage");
   }
 
   @override
@@ -454,15 +462,6 @@ class _LoginPageState extends State<LoginPage>
                                 textAlign: TextAlign.end),
                           ),
                         ),
-
-                        // Container(
-                        //   alignment: Alignment.centerRight,
-                        //   child: Text("Sign In without Password",
-                        //       style: GoogleFonts.sourceSansPro(
-                        //         color: Theme.of(context).backgroundColor,
-                        //       ),
-                        //       textAlign: TextAlign.end),
-                        // ),
                         const SizedBox(height: 60),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 20),

@@ -26,19 +26,14 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-
-    // ignore: avoid_print
-    print("Settings - INIT");
   }
 
   @override
   void dispose() {
     super.dispose();
-    // ignore: avoid_print
-    print("Settings - Dispose");
+    DarkMode;
+    isSwitched;
   }
-
-  // ignore: non_constant_identifier_names
 
   @override
   Widget build(BuildContext context) {

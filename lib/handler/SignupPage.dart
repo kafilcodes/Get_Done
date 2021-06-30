@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_done/services/others/internet.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -34,7 +35,8 @@ class _SignUpPageState extends State<SignUpPage>
   // ignore: non_constant_identifier_names
   bool Animate2 = false;
   // String _password = "";
-  final snackbarDone = const SnackBar(
+  final snackbarDone = SnackBar(
+    width: double.infinity,
     backgroundColor: Colors.grey,
     content: Text(
       "Done",
@@ -46,7 +48,6 @@ class _SignUpPageState extends State<SignUpPage>
   Future<void> _createUser() async {
     try {
       // ignore:  avoid_print
-      print("Email - $_email and Password $confirmpassword");
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
             email: _email,
@@ -64,22 +65,23 @@ class _SignUpPageState extends State<SignUpPage>
       );
       const CircularProgressIndicator();
       // ignore: avoid_print
-      print("done Registering , try to Login ;)");
+
       // ignore: avoid_print
-      print("User - $userCredential");
+
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } on FirebaseAuthException catch (e) {
+      showSimpleNotification(Text(e.toString()));
       setState(() {
         Animate2 = false;
       });
       // ignore: avoid_print
-      print("Error - $e");
+
     } catch (e) {
       setState(() {
         Animate2 = false;
       });
       // ignore: avoid_print
-      print("Error e - $e");
+
     }
   }
   // ---------------------------------------------------------------------------
@@ -94,10 +96,12 @@ class _SignUpPageState extends State<SignUpPage>
       });
       form.save();
       // ignore: avoid_print
-      print("form is valid");
+
     } else {
       // ignore: avoid_print
-      print("Form is Invalid");
+      showSimpleNotification(
+        Text("INVALID DETAILS "),
+      );
     }
   }
   //----------------------------------------------------------------------------
@@ -129,7 +133,6 @@ class _SignUpPageState extends State<SignUpPage>
     ]));
     controller2.repeat();
     // ignore: avoid_print
-    print("INIT - SignUpPage");
   }
 
   @override
@@ -138,8 +141,6 @@ class _SignUpPageState extends State<SignUpPage>
     confirmpassword.dispose();
     controller2.dispose();
     super.dispose();
-    // ignore: avoid_print
-    print("DISPOSE - SignUPPage");
   }
 
   //----------------------------------------------------------------------------

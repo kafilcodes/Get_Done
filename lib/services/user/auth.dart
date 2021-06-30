@@ -39,15 +39,18 @@ class AuthClass {
           UserCredential userCredential =
               await auth.signInWithCredential(credential);
         } catch (e) {
-          final snackbar = SnackBar(content: Text(e.toString()));
+          final snackbar =
+              SnackBar(width: double.infinity, content: Text(e.toString()));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
         }
       } else {
-        final snackbar = const SnackBar(content: Text("Not able to Sign"));
+        final snackbar =
+            SnackBar(width: double.infinity, content: Text("Not able to Sign"));
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
     } catch (e) {
-      final snackbar = SnackBar(content: Text(e.toString()));
+      final snackbar =
+          SnackBar(width: double.infinity, content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
@@ -65,13 +68,6 @@ class AuthClass {
               builder: (context) => LoginPage(),
             ),
           ),
-          // Navigator.pop(context),
-          //     Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => LoginPage(),
-          //   ),
-          // ),
         );
   }
 }

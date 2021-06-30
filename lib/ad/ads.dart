@@ -28,8 +28,6 @@ class _MyNativeAdState extends State<MyNativeAd> {
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
           // ignore: avoid_print
-          print(
-              "AD Failed to Loaded - CODE - ${error.code}, MESSAGE - ${error.message}");
         },
       ),
       request: const AdRequest(),
@@ -89,8 +87,6 @@ class _MyBannerAdState extends State<MyBannerAd> {
           onAdFailedToLoad: (ad, error) {
             ad.dispose();
             // ignore: avoid_print
-            print(
-                "AD Failed to Loaded - CODE - ${error.code}, MESSAGE - ${error.message}");
           },
         ),
         request: const AdRequest())

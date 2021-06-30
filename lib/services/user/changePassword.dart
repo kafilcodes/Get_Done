@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get_done/handler/LoginPage.dart';
 import 'package:get_done/services/user/auth.dart';
 import 'package:get_done/services/others/internet.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 // ignore: use_key_in_widget_constructors
 class ChangePasswordPage extends StatefulWidget {
@@ -27,9 +26,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     duration: const Duration(seconds: 3),
     backgroundColor: Colors.greenAccent.withOpacity(0.8),
     content: const SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: const Text(
-            "Done ! Password Reset Link has been Sent to User Email .")),
+      scrollDirection: Axis.horizontal,
+      child: const Text(
+          "Done ! Password Reset Link has been Sent to User Email ."),
+    ),
   );
   final notMatchsnackbar = SnackBar(
     duration: const Duration(seconds: 3),
@@ -51,9 +51,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     if (form!.validate()) {
       form.save();
       // ignore: avoid_print
-      print("form is valid");
+
     } else {
-      print("Form is Invalid");
+      showSimpleNotification(
+        Text("Invalid Details"),
+      );
     }
   }
 
@@ -61,13 +63,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     try {
       if (formKey2.currentState!.validate()) {
         auth.sendPasswordResetEmail(email: _email).whenComplete(() {
-          print("Reset Email sent to - $_email");
           ScaffoldMessenger.of(context).showSnackBar(sendsnackbar);
         });
       }
     } on FirebaseAuthException catch (e) {
-      print("Error = $e");
       final errorsnackbar = SnackBar(
+        width: double.infinity,
         duration: const Duration(seconds: 3),
         backgroundColor: Colors.yellowAccent.withOpacity(0.8),
         content: SingleChildScrollView(
@@ -98,13 +99,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   void initState() {
     super.initState();
-    print("INIT - ChangePassword Page");
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("DISPOSE - ChangePassword Page");
+    emailController.dispose();
+    _email;
+    formKey2;
   }
 
   @override
@@ -198,6 +200,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
+                        style: GoogleFonts.sourceSansPro(
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Theme.of(context).iconTheme.color),
                         textDirection: TextDirection.ltr,
                         enableInteractiveSelection: true,
                         enableSuggestions: true,
@@ -263,6 +270,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 width: 170,
                 child: ElevatedButton.icon(
                   onPressed: () async {
+                    FocusScope.of(context).unfocus();
+
                     HapticFeedback.mediumImpact();
 
                     if (formKey2.currentState!.validate()) {
@@ -270,12 +279,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       await isInternet(context).whenComplete(
                         () => sendPassResetLink().whenComplete(() {
                           AuthClass().signOutUser(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
                         }),
                       );
                     } else if (_email != auth.currentUser!.email) {

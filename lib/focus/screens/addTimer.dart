@@ -5,6 +5,7 @@ import 'package:get_done/home/others/functions.dart';
 import 'package:get_done/services/others/internet.dart';
 import 'package:get_done/services/others/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 CollectionReference ref = FirebaseFirestore.instance
     .collection("users")
@@ -20,7 +21,7 @@ class AddTimer extends StatefulWidget {
 class _AddTimerState extends State<AddTimer> {
   String priority = "High";
   String taskTitle = "";
-  String timerDuration = "";
+  Duration timerDuration = Duration(minutes: 5);
   final formKey3 = GlobalKey<FormState>();
 
   @override
@@ -161,16 +162,6 @@ class _AddTimerState extends State<AddTimer> {
                   padding: const EdgeInsets.all(10),
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 5,
-                        style: BorderStyle.solid,
-                        color: Colors.deepPurpleAccent),
-                    borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context)
-                        .scaffoldBackgroundColor
-                        .withOpacity(0.9),
-                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -187,18 +178,18 @@ class _AddTimerState extends State<AddTimer> {
                       ),
                       const SizedBox(height: 5),
                       CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hms,
-                          alignment: Alignment.center,
-                          backgroundColor: Theme.of(context)
-                              .scaffoldBackgroundColor
-                              .withOpacity(0.9),
-                          onTimerDurationChanged: (value) {
-                            setState(() {
-                              timerDuration = value.toString();
-                              // ignore: avoid_print
-                              print(timerDuration);
-                            });
-                          })
+                        mode: CupertinoTimerPickerMode.hms,
+                        alignment: Alignment.center,
+                        backgroundColor: Theme.of(context)
+                            .scaffoldBackgroundColor
+                            .withOpacity(0.9),
+                        onTimerDurationChanged: (value) {
+                          setState(() {
+                            timerDuration = value;
+                            // ignore: avoid_print
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -210,7 +201,7 @@ class _AddTimerState extends State<AddTimer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 35.0),
                       child: Text(
                         "Priority - ",
                         style: GoogleFonts.overpass(
@@ -223,12 +214,6 @@ class _AddTimerState extends State<AddTimer> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 5),
                       margin: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 2, color: Colors.deepPurpleAccent),
-                        borderRadius: BorderRadius.circular(15),
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +251,6 @@ class _AddTimerState extends State<AddTimer> {
                                     setState(() {
                                       priority = value.toString();
                                       // ignore: avoid_print
-                                      print(priority);
                                     });
                                   }),
                               Text(
@@ -288,7 +272,6 @@ class _AddTimerState extends State<AddTimer> {
                                     setState(() {
                                       priority = value.toString();
                                       // ignore: avoid_print
-                                      print(priority);
                                     });
                                   }),
                               Text(
@@ -328,23 +311,22 @@ class _AddTimerState extends State<AddTimer> {
                     onPressed: () async {
                       if (formKey3.currentState!.validate()) {
                         await isInternet(context).whenComplete(
-                          () => ref
-                              .add({
-                                "color": Functions.prioritycolor(priority),
-                                "titleName": taskTitle,
-                                "duration": timerDuration,
-                                "priority": priority,
-                                "date": FieldValue.serverTimestamp(),
-                              })
-                              .whenComplete(
-                                () => Navigator.pop(context),
-                              )
-                              // ignore: avoid_print
-                              .whenComplete(() => print("Added SucessFuly")),
+                          () => ref.add({
+                            "color": Functions.prioritycolor(priority),
+                            "titleName": taskTitle,
+                            "duration": timerDuration.toString(),
+                            "priority": priority,
+                            "date": FieldValue.serverTimestamp(),
+                          }).whenComplete(
+                            () => Navigator.pop(context),
+                          ),
+                          // ignore: avoid_print
                         );
                       } else {
                         // ignore: avoid_print
-                        print("ERROR EMPTY TITLE NAME");
+                        showSimpleNotification(
+                          Text("Title can't be Empty"),
+                        );
                       }
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsv_color_pickers/hsv_color_pickers.dart';
 import 'package:get_done/notes/others/utils.dart';
 import 'package:get_done/services/others/internet.dart';
@@ -12,11 +13,9 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  //------------------------------Fields-----------------------
   String titleText = "";
   String descriptionText = "";
   Color updatedColor2 = Color(Colors.redAccent.value);
-  //------------------------------------------------------------
   @override
   void initState() {
     super.initState();
@@ -24,8 +23,6 @@ class _AddScreenState extends State<AddScreen> {
     myStyle.textAlign;
     myColor.selectedColor;
     Reference.ref;
-    // ignore: avoid_print
-    print("INIT - Adding Notes");
   }
 
   @override
@@ -33,11 +30,7 @@ class _AddScreenState extends State<AddScreen> {
     super.dispose();
     titleText;
     descriptionText;
-
     updatedColor2;
-
-    // ignore: avoid_print
-    print("DISPOSE - Adding Notes Screen");
   }
 
   @override
@@ -57,13 +50,12 @@ class _AddScreenState extends State<AddScreen> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "ADD NOTES",
-          style: TextStyle(
+          style: GoogleFonts.sourceSansPro(
             color: Colors.yellow,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w700,
-            fontFamily: "WorkSans",
           ),
         ),
         actions: [

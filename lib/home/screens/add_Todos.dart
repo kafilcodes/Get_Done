@@ -17,7 +17,6 @@ class _AddTodosState extends State<AddTodos> {
     super.initState();
     GoogleFonts.config;
     scontroller = TextEditingController();
-    print("INIT - ADD TODO Page ");
   }
 
   @override
@@ -25,7 +24,6 @@ class _AddTodosState extends State<AddTodos> {
     Functions.subtasks.clear();
     super.dispose();
     scontroller.dispose();
-    print("DISPOSE - ADD TODO Page ");
   }
 
   @override
@@ -123,105 +121,6 @@ class _AddTodosState extends State<AddTodos> {
                   ),
                 ),
               ),
-              // Divider(
-              //   indent: 70,
-              //   endIndent: 70,
-              //   thickness: 2,
-              //   color: Theme.of(context).iconTheme.color,
-              // ),
-
-              // Container(
-              //   alignment: Alignment.center,
-              //   margin:
-              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              //   padding: const EdgeInsets.all(10),
-              //   child: TextField(
-              //     autofocus: false,
-              //     autocorrect: false,
-              //     controller: scontroller,
-              //     style: GoogleFonts.sourceSansPro(
-              //       fontSize: 23,
-              //       fontWeight: FontWeight.bold,
-              //       letterSpacing: 1,
-              //       color: Theme.of(context).iconTheme.color,
-              //     ),
-              //     onSubmitted: (subtasktext) {
-              //       Functions.subtasks.add(
-              //         Subtask(title: subtasktext, completed: false),
-              //       );
-              //       scontroller.clear();
-              //       setState(() {});
-              //     },
-              //     maxLines: 1,
-              //     cursorColor: Theme.of(context).iconTheme.color,
-              //     textInputAction: TextInputAction.done,
-              //     textDirection: TextDirection.ltr,
-              //     textCapitalization: TextCapitalization.sentences,
-              //     decoration: InputDecoration(
-              //       border: InputBorder.none,
-              //       hintText: 'Enter Subtask',
-              //       hintStyle: GoogleFonts.sourceSansPro(
-              //           fontSize: 23,
-              //           fontWeight: FontWeight.bold,
-              //           fontStyle: FontStyle.italic,
-              //           color: Theme.of(context).iconTheme.color),
-              //     ),
-              //   ),
-              // ),
-              // Divider(
-              //   indent: 20,
-              //   endIndent: 20,
-              //   thickness: 1,
-              //   color: Theme.of(context).iconTheme.color,
-              // ),
-              // SingleChildScrollView(
-              //   scrollDirection: Axis.vertical,
-              //   child: Container(
-              //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              //     width: double.infinity,
-              //     height: 300,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(15),
-              //       color: Colors.transparent,
-              //     ),
-              //     child: ListView.builder(
-              //       itemCount: Functions.subtasks.length,
-              //       itemBuilder: (context, index) => ListTile(
-              //         title: Text(
-              //           "${Functions.subtasks[index].title}",
-              //           style: GoogleFonts.sourceSansPro(
-              //             color: Theme.of(context).iconTheme.color,
-              //             fontSize: 22,
-              //             fontWeight: FontWeight.bold,
-              //             fontStyle: FontStyle.italic,
-              //           ),
-              //         ),
-              //         leading: Icon(
-              //           Icons.check_box_outline_blank,
-              //           color: Theme.of(context).iconTheme.color,
-              //           size: 20,
-              //         ),
-              //         trailing: IconButton(
-              //           icon: Icon(
-              //             Icons.cancel_sharp,
-              //             size: 20,
-              //             color: Colors.red.withOpacity(0.5),
-              //           ),
-              //           onPressed: () {
-              //             Functions.subtasks.removeAt(index);
-              //             setState(() {});
-              //           },
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Divider(
-              //   indent: 20,
-              //   endIndent: 20,
-              //   thickness: 1,
-              //   color: Theme.of(context).iconTheme.color,
-              // ),
 
               Container(
                 alignment: Alignment.center,

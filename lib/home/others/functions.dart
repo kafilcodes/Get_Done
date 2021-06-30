@@ -42,7 +42,7 @@ class Functions {
       "date": FieldValue.serverTimestamp(),
       "isCompleted": false,
       "desc": todoDescription,
-      "subtask": subtasks.asMap()
+      // "subtask": subtasks.asMap()
     };
 
     docref.set(todos).whenComplete(() {

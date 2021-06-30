@@ -38,7 +38,6 @@ class _MyFocusPageState extends State<MyFocusPage> {
     GoogleFonts.config;
     ref;
     super.initState();
-    print("Focus Page INIT");
   }
 
   @override
@@ -46,7 +45,6 @@ class _MyFocusPageState extends State<MyFocusPage> {
     super.dispose();
     isSelected;
     mycolor;
-    print("Focus Page Dispose");
   }
 
   CollectionReference ref = FirebaseFirestore.instance
@@ -196,9 +194,7 @@ class _MyFocusPageState extends State<MyFocusPage> {
                               snapshot.data!.docs[index];
                           deleteFocus(item) {
                             DocumentReference documentReference = ref.doc(item);
-                            documentReference.delete().whenComplete(() {
-                              print(" FOCUS- $item Deleted");
-                            });
+                            documentReference.delete().whenComplete(() {});
                           }
 
                           return Card(
@@ -239,7 +235,8 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                         Icons.done,
                                         size: 30,
                                         color: Colors.deepPurpleAccent,
-                                      ))
+                                      ),
+                                    )
                                   : Text(
                                       documentSnapshot["priority"],
                                       textAlign: TextAlign.center,

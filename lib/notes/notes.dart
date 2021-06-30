@@ -41,7 +41,6 @@ class _NotesPageState extends State<NotesPage> {
     GoogleFonts.config;
     const CircularProgressIndicator();
     // ignore: avoid_print
-    print('notes page INIT');
   }
 
   @override
@@ -51,7 +50,6 @@ class _NotesPageState extends State<NotesPage> {
     tcontroller2.dispose();
     super.dispose();
     // ignore: avoid_print
-    print('notes page DISPOSE');
   }
 
   @override
@@ -163,53 +161,6 @@ class _NotesPageState extends State<NotesPage> {
                                 ),
                               );
                             },
-                            // onLongPress: () {
-                            //   HapticFeedback.heavyImpact();
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) =>
-                            //         CupertinoAlertDialog(
-                            //       title: Text(
-                            //         "Delete Note ? ",
-                            //         textAlign: TextAlign.center,
-                            //         style: GoogleFonts.sourceSansPro(
-                            //           color: Colors.redAccent,
-                            //           fontWeight: FontWeight.w600,
-                            //           fontSize: 20,
-                            //         ),
-                            //       ),
-                            //       content: Text(
-                            //         "this action can't be Undo !",
-                            //         textAlign: TextAlign.center,
-                            //         style: GoogleFonts.sourceSansPro(
-                            //           fontStyle: FontStyle.italic,
-                            //           fontSize: 14,
-                            //           fontWeight: FontWeight.w300,
-                            //           color: Colors.grey[600],
-                            //         ),
-                            //       ),
-                            //       actions: [
-                            //         CupertinoDialogAction(
-                            //           isDefaultAction: true,
-                            //           child: Text(
-                            //             "DELETE",
-                            //             textAlign: TextAlign.center,
-                            //             style: GoogleFonts.sourceSansPro(
-                            //               fontWeight: FontWeight.bold,
-                            //               fontSize: 15.0,
-                            //             ),
-                            //           ),
-                            //           onPressed: () {
-                            //             HapticFeedback.lightImpact();
-                            //             deleteNotes(
-                            //                 snapshot.data!.docs[index].id);
-                            //             Navigator.pop(context);
-                            //           },
-                            //         )
-                            //       ],
-                            //     ),
-                            //   );
-                            // },
                             child: Container(
                               margin: const EdgeInsets.all(15),
                               padding: const EdgeInsets.all(15),

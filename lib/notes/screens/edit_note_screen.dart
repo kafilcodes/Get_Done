@@ -40,8 +40,6 @@ class _EditScreenState extends State<EditScreen> {
     myColor.selectedColor = Color(widget.docEdit["color"]);
     updatedColor = Color(widget.docEdit["color"]);
     super.initState();
-    // ignore: avoid_print
-    print("INIT - NOTE EDIT PAGE");
   }
 
   @override
@@ -50,13 +48,9 @@ class _EditScreenState extends State<EditScreen> {
     title.dispose();
     description.dispose();
     myStyle.textStyle;
-
     textclicked;
     editing;
     colorpclicked;
-
-    // ignore: avoid_print
-    print("DISPOSE - NOTE EDIT PAGE");
   }
 
   @override
@@ -226,33 +220,32 @@ class _EditScreenState extends State<EditScreen> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 5),
                       child: SingleChildScrollView(
-                          child: TextStyleEditor(
-                        // ignore: non_constant_identifier_names
-                        onToolbarActionChanged: (Edit) {
-                          setState(() {
-                            myStyle.edited = Edit;
-                          });
-                        },
-                        fonts: listText.fonts,
-                        paletteColors: listText.paletteColors,
-                        textStyle: myStyle.textStyle,
-                        textAlign: myStyle.textAlign,
-                        initialTool: EditorToolbarAction.fontFamilyTool,
-                        onTextAlignEdited: (align) {
-                          setState(() {
-                            myStyle.textAlign = align;
-                          });
-                        },
-                        onTextStyleEdited: (style) {
-                          setState(() {
-                            myStyle.textStyle = myStyle.textStyle.merge(style);
-                          });
-                        },
-                        onCpasLockTaggle: (caps) {
-                          // ignore: avoid_print
-                          print(caps);
-                        },
-                      )),
+                        child: TextStyleEditor(
+                          // ignore: non_constant_identifier_names
+                          onToolbarActionChanged: (Edit) {
+                            setState(() {
+                              myStyle.edited = Edit;
+                            });
+                          },
+                          fonts: listText.fonts,
+                          paletteColors: listText.paletteColors,
+                          textStyle: myStyle.textStyle,
+                          textAlign: myStyle.textAlign,
+                          initialTool: EditorToolbarAction.fontFamilyTool,
+                          onTextAlignEdited: (align) {
+                            setState(() {
+                              myStyle.textAlign = align;
+                            });
+                          },
+                          onTextStyleEdited: (style) {
+                            setState(() {
+                              myStyle.textStyle =
+                                  myStyle.textStyle.merge(style);
+                            });
+                          },
+                          onCpasLockTaggle: (caps) {},
+                        ),
+                      ),
                     ),
                   )
                 : SizedBox(
