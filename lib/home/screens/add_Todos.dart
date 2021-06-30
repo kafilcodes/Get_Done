@@ -38,7 +38,7 @@ class _AddTodosState extends State<AddTodos> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            size: 30,
+            size: 25,
             color: Theme.of(context).iconTheme.color,
           ),
           onPressed: () {
@@ -50,25 +50,27 @@ class _AddTodosState extends State<AddTodos> {
           "ADD TODOS",
           style: GoogleFonts.ubuntuCondensed(
               color: Theme.of(context).iconTheme.color,
-              fontSize: 30,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
-              letterSpacing: 1.1),
+              letterSpacing: 1.5),
         ),
         actions: [
           IconButton(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(right: 40),
-              onPressed: () async {
-                await isInternet(context).whenComplete(
-                  () => Functions.createTodos(),
-                );
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.library_add_check,
-                size: 40,
-                color: Theme.of(context).iconTheme.color,
-              )),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(right: 35),
+            onPressed: () async {
+              await isInternet(context).whenComplete(
+                () => Functions.createTodos(),
+              );
+
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.library_add_check,
+              size: 35,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
         ],
       ),
       body: Container(
@@ -121,105 +123,105 @@ class _AddTodosState extends State<AddTodos> {
                   ),
                 ),
               ),
-              Divider(
-                indent: 70,
-                endIndent: 70,
-                thickness: 2,
-                color: Theme.of(context).iconTheme.color,
-              ),
+              // Divider(
+              //   indent: 70,
+              //   endIndent: 70,
+              //   thickness: 2,
+              //   color: Theme.of(context).iconTheme.color,
+              // ),
 
-              Container(
-                alignment: Alignment.center,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  autofocus: false,
-                  autocorrect: false,
-                  controller: scontroller,
-                  style: GoogleFonts.sourceSansPro(
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  onSubmitted: (subtasktext) {
-                    Functions.subtasks.add(
-                      Subtask(title: subtasktext, completed: false),
-                    );
-                    scontroller.clear();
-                    setState(() {});
-                  },
-                  maxLines: 1,
-                  cursorColor: Theme.of(context).iconTheme.color,
-                  textInputAction: TextInputAction.done,
-                  textDirection: TextDirection.ltr,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Enter Subtask',
-                    hintStyle: GoogleFonts.sourceSansPro(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Theme.of(context).iconTheme.color),
-                  ),
-                ),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                thickness: 1,
-                color: Theme.of(context).iconTheme.color,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  width: double.infinity,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.transparent,
-                  ),
-                  child: ListView.builder(
-                    itemCount: Functions.subtasks.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text(
-                        "${Functions.subtasks[index].title}",
-                        style: GoogleFonts.sourceSansPro(
-                          color: Theme.of(context).iconTheme.color,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.check_box_outline_blank,
-                        color: Theme.of(context).iconTheme.color,
-                        size: 20,
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          Icons.cancel_sharp,
-                          size: 20,
-                          color: Colors.red.withOpacity(0.5),
-                        ),
-                        onPressed: () {
-                          Functions.subtasks.removeAt(index);
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                thickness: 1,
-                color: Theme.of(context).iconTheme.color,
-              ),
+              // Container(
+              //   alignment: Alignment.center,
+              //   margin:
+              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              //   padding: const EdgeInsets.all(10),
+              //   child: TextField(
+              //     autofocus: false,
+              //     autocorrect: false,
+              //     controller: scontroller,
+              //     style: GoogleFonts.sourceSansPro(
+              //       fontSize: 23,
+              //       fontWeight: FontWeight.bold,
+              //       letterSpacing: 1,
+              //       color: Theme.of(context).iconTheme.color,
+              //     ),
+              //     onSubmitted: (subtasktext) {
+              //       Functions.subtasks.add(
+              //         Subtask(title: subtasktext, completed: false),
+              //       );
+              //       scontroller.clear();
+              //       setState(() {});
+              //     },
+              //     maxLines: 1,
+              //     cursorColor: Theme.of(context).iconTheme.color,
+              //     textInputAction: TextInputAction.done,
+              //     textDirection: TextDirection.ltr,
+              //     textCapitalization: TextCapitalization.sentences,
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       hintText: 'Enter Subtask',
+              //       hintStyle: GoogleFonts.sourceSansPro(
+              //           fontSize: 23,
+              //           fontWeight: FontWeight.bold,
+              //           fontStyle: FontStyle.italic,
+              //           color: Theme.of(context).iconTheme.color),
+              //     ),
+              //   ),
+              // ),
+              // Divider(
+              //   indent: 20,
+              //   endIndent: 20,
+              //   thickness: 1,
+              //   color: Theme.of(context).iconTheme.color,
+              // ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.vertical,
+              //   child: Container(
+              //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              //     width: double.infinity,
+              //     height: 300,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(15),
+              //       color: Colors.transparent,
+              //     ),
+              //     child: ListView.builder(
+              //       itemCount: Functions.subtasks.length,
+              //       itemBuilder: (context, index) => ListTile(
+              //         title: Text(
+              //           "${Functions.subtasks[index].title}",
+              //           style: GoogleFonts.sourceSansPro(
+              //             color: Theme.of(context).iconTheme.color,
+              //             fontSize: 22,
+              //             fontWeight: FontWeight.bold,
+              //             fontStyle: FontStyle.italic,
+              //           ),
+              //         ),
+              //         leading: Icon(
+              //           Icons.check_box_outline_blank,
+              //           color: Theme.of(context).iconTheme.color,
+              //           size: 20,
+              //         ),
+              //         trailing: IconButton(
+              //           icon: Icon(
+              //             Icons.cancel_sharp,
+              //             size: 20,
+              //             color: Colors.red.withOpacity(0.5),
+              //           ),
+              //           onPressed: () {
+              //             Functions.subtasks.removeAt(index);
+              //             setState(() {});
+              //           },
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Divider(
+              //   indent: 20,
+              //   endIndent: 20,
+              //   thickness: 1,
+              //   color: Theme.of(context).iconTheme.color,
+              // ),
 
               Container(
                 alignment: Alignment.center,
@@ -270,13 +272,13 @@ class _AddTodosState extends State<AddTodos> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 45.0),
+                    padding: const EdgeInsets.only(left: 40.0),
                     child: Text(
                       "Priority - ",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.overpass(
                           fontStyle: FontStyle.italic,
-                          fontSize: 22,
+                          fontSize: 20,
                           color: Theme.of(context)
                               .iconTheme
                               .color!
@@ -287,90 +289,78 @@ class _AddTodosState extends State<AddTodos> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 2, color: Theme.of(context).primaryColorLight),
-                      borderRadius: BorderRadius.circular(15),
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(),
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Colors.greenAccent,
-                                value: "Low",
-                                groupValue: Functions.priority,
-                                onChanged: (value) {
-                                  setState(() {
-                                    Functions.priority = value.toString();
-                                    print(Functions.priority);
-                                  });
-                                }),
-                            Text(
-                              "Low",
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 20,
-                                  color: Colors.greenAccent,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Colors.yellowAccent,
-                                value: "Medium",
-                                groupValue: Functions.priority,
-                                onChanged: (value) {
-                                  setState(() {
-                                    Functions.priority = value.toString();
-                                    print(Functions.priority);
-                                  });
-                                }),
-                            Text(
-                              "Medium",
-                              style: GoogleFonts.sourceSansPro(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.yellowAccent),
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Colors.redAccent,
-                                value: "High",
-                                groupValue: Functions.priority,
-                                onChanged: (value) {
-                                  setState(() {
-                                    Functions.priority = value.toString();
-                                    print(Functions.priority);
-                                  });
-                                }),
-                            Text(
-                              "High",
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.redAccent),
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Radio(
+                              activeColor: Colors.greenAccent,
+                              value: "Low",
+                              groupValue: Functions.priority,
+                              onChanged: (value) {
+                                setState(() {
+                                  Functions.priority = value.toString();
+                                  print(Functions.priority);
+                                });
+                              }),
+                          Text(
+                            "Low",
+                            style: GoogleFonts.sourceSansPro(
+                                fontSize: 18,
+                                color: Colors.greenAccent,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Radio(
+                              activeColor: Colors.yellowAccent,
+                              value: "Medium",
+                              groupValue: Functions.priority,
+                              onChanged: (value) {
+                                setState(() {
+                                  Functions.priority = value.toString();
+                                  print(Functions.priority);
+                                });
+                              }),
+                          Text(
+                            "Medium",
+                            style: GoogleFonts.sourceSansPro(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.yellowAccent),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Radio(
+                              activeColor: Colors.redAccent,
+                              value: "High",
+                              groupValue: Functions.priority,
+                              onChanged: (value) {
+                                setState(() {
+                                  Functions.priority = value.toString();
+                                  print(Functions.priority);
+                                });
+                              }),
+                          Text(
+                            "High",
+                            style: GoogleFonts.sourceSansPro(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.redAccent),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                 ],
               ),

@@ -42,8 +42,8 @@ class _TodoWidgetState extends State<TodoWidget> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         child: Card(
-          elevation: 12,
-          shadowColor: Colors.redAccent,
+          elevation: 3,
+          shadowColor: Color(widget.docsnap["color"]).withOpacity(0.9),
           margin: const EdgeInsets.all(8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -63,6 +63,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                 value: widget.docsnap["isCompleted"]),
             title: Text(
               widget.docsnap["todoTitle"],
+              overflow: TextOverflow.ellipsis,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: GoogleFonts.sourceSansPro(
@@ -125,7 +126,8 @@ class _TodoWidgetState extends State<TodoWidget> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Details  -",
+                      "Description -",
+                      overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.notoSans(
                         fontStyle: FontStyle.italic,

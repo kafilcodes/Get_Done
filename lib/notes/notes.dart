@@ -28,9 +28,15 @@ class _NotesPageState extends State<NotesPage> {
   bool searching2 = false;
   String searchedText2 = "";
 
+  CollectionReference<Map<String, dynamic>> noteref = FirebaseFirestore.instance
+      .collection("users")
+      .doc(getuser.user!.uid)
+      .collection("MyNotes");
+
   @override
   void initState() {
     super.initState();
+    noteref;
     tcontroller2 = TextEditingController();
     GoogleFonts.config;
     const CircularProgressIndicator();
@@ -40,6 +46,7 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   void dispose() {
+    noteref;
     searchedText2;
     tcontroller2.dispose();
     super.dispose();
@@ -68,17 +75,8 @@ class _NotesPageState extends State<NotesPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: StreamBuilder(
         stream: searching2
-            ? FirebaseFirestore.instance
-                .collection("users")
-                .doc(getuser.user!.uid)
-                .collection("MyNotes")
-                .where("title", isEqualTo: searchedText2)
-                .snapshots()
-            : FirebaseFirestore.instance
-                .collection("users")
-                .doc(getuser.user!.uid)
-                .collection("MyNotes")
-                .snapshots(),
+            ? noteref.where("title", isEqualTo: searchedText2).snapshots()
+            : noteref.orderBy('date', descending: true).snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<dynamic, dynamic>>> snapshot) {
           if (snapshot.hasData) {
@@ -93,6 +91,7 @@ class _NotesPageState extends State<NotesPage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: CupertinoSearchTextField(
+                      itemColor: Colors.yellowAccent.withOpacity(0.9),
                       placeholder: "Search  Notes",
                       placeholderStyle: GoogleFonts.sourceSansPro(
                         fontWeight: FontWeight.w300,
@@ -100,13 +99,12 @@ class _NotesPageState extends State<NotesPage> {
                         fontSize: 16,
                         color: Theme.of(context).textTheme.headline2!.color,
                       ),
-                      autocorrect: false,
                       suffixMode: OverlayVisibilityMode.always,
                       suffixIcon: Icon(
                         Icons.cancel,
                         size: 22,
                         color: searching2
-                            ? Colors.red.withOpacity(0.7)
+                            ? Colors.yellowAccent.withOpacity(0.7)
                             : Colors.transparent,
                       ),
                       onSuffixTap: () {
@@ -165,53 +163,53 @@ class _NotesPageState extends State<NotesPage> {
                                 ),
                               );
                             },
-                            onLongPress: () {
-                              HapticFeedback.heavyImpact();
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    CupertinoAlertDialog(
-                                  title: Text(
-                                    "Delete Note ? ",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.sourceSansPro(
-                                      color: Colors.redAccent,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  content: Text(
-                                    "this action can't be Undo !",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.sourceSansPro(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                  actions: [
-                                    CupertinoDialogAction(
-                                      isDefaultAction: true,
-                                      child: Text(
-                                        "DELETE",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.sourceSansPro(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.0,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact();
-                                        deleteNotes(
-                                            snapshot.data!.docs[index].id);
-                                        Navigator.pop(context);
-                                      },
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
+                            // onLongPress: () {
+                            //   HapticFeedback.heavyImpact();
+                            //   showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context) =>
+                            //         CupertinoAlertDialog(
+                            //       title: Text(
+                            //         "Delete Note ? ",
+                            //         textAlign: TextAlign.center,
+                            //         style: GoogleFonts.sourceSansPro(
+                            //           color: Colors.redAccent,
+                            //           fontWeight: FontWeight.w600,
+                            //           fontSize: 20,
+                            //         ),
+                            //       ),
+                            //       content: Text(
+                            //         "this action can't be Undo !",
+                            //         textAlign: TextAlign.center,
+                            //         style: GoogleFonts.sourceSansPro(
+                            //           fontStyle: FontStyle.italic,
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.w300,
+                            //           color: Colors.grey[600],
+                            //         ),
+                            //       ),
+                            //       actions: [
+                            //         CupertinoDialogAction(
+                            //           isDefaultAction: true,
+                            //           child: Text(
+                            //             "DELETE",
+                            //             textAlign: TextAlign.center,
+                            //             style: GoogleFonts.sourceSansPro(
+                            //               fontWeight: FontWeight.bold,
+                            //               fontSize: 15.0,
+                            //             ),
+                            //           ),
+                            //           onPressed: () {
+                            //             HapticFeedback.lightImpact();
+                            //             deleteNotes(
+                            //                 snapshot.data!.docs[index].id);
+                            //             Navigator.pop(context);
+                            //           },
+                            //         )
+                            //       ],
+                            //     ),
+                            //   );
+                            // },
                             child: Container(
                               margin: const EdgeInsets.all(15),
                               padding: const EdgeInsets.all(15),
@@ -227,25 +225,31 @@ class _NotesPageState extends State<NotesPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    // snapshot.data.docs[index]['title'],
-                                    snapshot.data!.docs[index]['title'],
-                                    maxLines: 2,
-                                    style: GoogleFonts.sourceSansPro(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 25,
+                                  Expanded(
+                                    child: Text(
+                                      // snapshot.data.docs[index]['title'],
+                                      snapshot.data!.docs[index]['title'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: GoogleFonts.sourceSansPro(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 22,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(height: 7),
-                                  Text(
-                                    snapshot.data!.docs[index]['description'],
-                                    maxLines: 6,
-                                    style: GoogleFonts.sourceSansPro(
-                                        color: Colors.black87,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                        fontStyle: FontStyle.italic),
+                                  Expanded(
+                                    child: Text(
+                                      snapshot.data!.docs[index]['description'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 6,
+                                      style: GoogleFonts.sourceSansPro(
+                                          color: Colors.black87,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle: FontStyle.italic),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -261,6 +265,7 @@ class _NotesPageState extends State<NotesPage> {
           } else if (snapshot.hasError) {
             return Text(
               "No Data Available Right Now ",
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: GoogleFonts.sourceSansPro(
                 color: Colors.redAccent.shade200,

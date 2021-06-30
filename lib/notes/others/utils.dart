@@ -19,14 +19,14 @@ class Reference {
 class listText {
   static List<String> fonts = [
     GoogleFonts.openSansCondensed().fontFamily.toString(),
-    GoogleFonts.alexBrush().fontFamily.toString(),
+    GoogleFonts.cedarvilleCursive().fontFamily.toString(),
     GoogleFonts.allura().fontFamily.toString(),
-    GoogleFonts.arizonia().fontFamily.toString(),
-    GoogleFonts.trochut().fontFamily.toString(),
+    GoogleFonts.castoro().fontFamily.toString(),
+    GoogleFonts.sofia().fontFamily.toString(),
     GoogleFonts.grandHotel().fontFamily.toString(),
     GoogleFonts.greatVibes().fontFamily.toString(),
     GoogleFonts.lobster().fontFamily.toString(),
-    GoogleFonts.openSans().fontFamily.toString(),
+    GoogleFonts.fugazOne().fontFamily.toString(),
     GoogleFonts.firaSansCondensed().fontFamily.toString(),
     GoogleFonts.oswald().fontFamily.toString(),
     GoogleFonts.pacifico().fontFamily.toString(),

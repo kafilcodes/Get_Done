@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hsv_color_pickers/hsv_color_pickers.dart';
 import 'package:get_done/notes/others/utils.dart';
 import 'package:get_done/services/others/internet.dart';
@@ -16,9 +17,12 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  Color updatedColor = Color(Colors.black.value);
+  Color updatedColor = Color(Colors.yellow.value);
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+  bool textclicked = false;
+  bool colorpclicked = false;
+  bool editing = false;
 
   @override
   void initState() {
@@ -34,6 +38,7 @@ class _EditScreenState extends State<EditScreen> {
       color: Color(widget.docEdit["textstyle"]["tcolor"]),
     );
     myColor.selectedColor = Color(widget.docEdit["color"]);
+    updatedColor = Color(widget.docEdit["color"]);
     super.initState();
     // ignore: avoid_print
     print("INIT - NOTE EDIT PAGE");
@@ -42,6 +47,14 @@ class _EditScreenState extends State<EditScreen> {
   @override
   void dispose() {
     super.dispose();
+    title.dispose();
+    description.dispose();
+    myStyle.textStyle;
+
+    textclicked;
+    editing;
+    colorpclicked;
+
     // ignore: avoid_print
     print("DISPOSE - NOTE EDIT PAGE");
   }
@@ -63,20 +76,34 @@ class _EditScreenState extends State<EditScreen> {
             Navigator.pop(context);
           },
         ),
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Text(
-            "EDIT NOTES",
+            editing ? "EDIT NOTES" : "NOTES",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.yellow,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w700,
-              fontFamily: "WorkSans",
-            ),
+            style: GoogleFonts.sourceSansPro(
+                color: updatedColor.withOpacity(1),
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w700,
+                fontSize: 18),
           ),
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                editing = !editing;
+              });
+            },
+            icon: Icon(
+              Icons.edit,
+              size: 27,
+              color: editing ? updatedColor.withOpacity(1) : Colors.white,
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
           IconButton(
             icon: Icon(Icons.delete_outline,
                 color: Colors.red.withOpacity(0.8), size: 28),
@@ -93,6 +120,7 @@ class _EditScreenState extends State<EditScreen> {
             icon:
                 Icon(Icons.done, color: Colors.white.withOpacity(1), size: 31),
             onPressed: () async {
+              FocusScope.of(context).unfocus();
               await isInternet(context).whenComplete(
                 () => widget.docEdit.reference.update({
                   "title": title.text,
@@ -119,6 +147,7 @@ class _EditScreenState extends State<EditScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              enabled: editing,
               maxLines: 1,
               textCapitalization: TextCapitalization.sentences,
               autofocus: false,
@@ -144,6 +173,7 @@ class _EditScreenState extends State<EditScreen> {
             ),
             Expanded(
               child: TextField(
+                enabled: editing,
                 maxLines: 8,
                 scrollPhysics: const ClampingScrollPhysics(),
                 enableSuggestions: true,
@@ -160,68 +190,124 @@ class _EditScreenState extends State<EditScreen> {
               ),
             ),
             // ignore: sized_box_for_whitespace
-            Container(
-              height: 60,
-              width: 100,
-              child: HuePicker(
-                initialColor: HSVColor.fromColor(
-                  myColor.selectedColor =
-                      Color(widget.docEdit["color"]).withOpacity(0.9),
-                ),
-                onChanged: (HSVColor color) {
-                  setState(() {
-                    updatedColor = myColor.selectedColor = color.toColor();
-                  });
-                  // ignore: avoid_print
-                  print(myColor.selectedColor.value);
+            colorpclicked
+                ? Container(
+                    height: 60,
+                    width: 100,
+                    child: HuePicker(
+                      initialColor: HSVColor.fromColor(
+                        myColor.selectedColor =
+                            Color(widget.docEdit["color"]).withOpacity(0.9),
+                      ),
+                      onChanged: (HSVColor color) {
+                        setState(() {
+                          updatedColor =
+                              myColor.selectedColor = color.toColor();
+                        });
+                        // ignore: avoid_print
+                        print(myColor.selectedColor.value);
 
-                  // do something with color
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 100,
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: SingleChildScrollView(
-                  child: TextStyleEditor(
-                    // ignore: non_constant_identifier_names
-                    onToolbarActionChanged: (Edit) {
-                      setState(() {
-                        myStyle.edited = Edit;
-                      });
-                    },
-                    fonts: listText.fonts,
-                    paletteColors: listText.paletteColors,
-                    textStyle: myStyle.textStyle,
-                    textAlign: myStyle.textAlign,
-                    initialTool: EditorToolbarAction.fontFamilyTool,
-                    onTextAlignEdited: (align) {
-                      setState(() {
-                        myStyle.textAlign = align;
-                      });
-                    },
-                    onTextStyleEdited: (style) {
-                      setState(() {
-                        myStyle.textStyle = myStyle.textStyle.merge(style);
-                      });
-                    },
-                    onCpasLockTaggle: (caps) {
-                      // ignore: avoid_print
-                      print(caps);
-                    },
+                        // do something with color
+                      },
+                    ))
+                : SizedBox(
+                    height: 0,
+                    width: 0,
                   ),
-                ),
-              ),
-            ),
             const SizedBox(
               height: 20,
             ),
+            textclicked
+                ? Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 100,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 5),
+                      child: SingleChildScrollView(
+                          child: TextStyleEditor(
+                        // ignore: non_constant_identifier_names
+                        onToolbarActionChanged: (Edit) {
+                          setState(() {
+                            myStyle.edited = Edit;
+                          });
+                        },
+                        fonts: listText.fonts,
+                        paletteColors: listText.paletteColors,
+                        textStyle: myStyle.textStyle,
+                        textAlign: myStyle.textAlign,
+                        initialTool: EditorToolbarAction.fontFamilyTool,
+                        onTextAlignEdited: (align) {
+                          setState(() {
+                            myStyle.textAlign = align;
+                          });
+                        },
+                        onTextStyleEdited: (style) {
+                          setState(() {
+                            myStyle.textStyle = myStyle.textStyle.merge(style);
+                          });
+                        },
+                        onCpasLockTaggle: (caps) {
+                          // ignore: avoid_print
+                          print(caps);
+                        },
+                      )),
+                    ),
+                  )
+                : SizedBox(
+                    height: 0,
+                    width: 0,
+                  ),
+            editing
+                ? Container(
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                        topRight: Radius.circular(5),
+                        topLeft: Radius.circular(5),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              colorpclicked = !colorpclicked;
+                            });
+                          },
+                          icon: Icon(Icons.color_lens,
+                              size: 30,
+                              color: colorpclicked
+                                  ? updatedColor.withOpacity(1)
+                                  : Colors.white),
+                        ),
+                        Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              textclicked = !textclicked;
+                            });
+                          },
+                          icon: Icon(Icons.text_fields,
+                              size: 30,
+                              color: textclicked
+                                  ? updatedColor.withOpacity(1)
+                                  : Colors.white),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  )
+                : SizedBox(
+                    width: 0,
+                    height: 0,
+                  ),
           ],
         ),
       ),

@@ -1,15 +1,13 @@
+import 'package:get_done/ad/ads.dart';
 import 'package:get_done/services/notifications/firebase_notification_handler.dart';
 import 'package:get_done/theme/app_theme_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get_done/handler/LoginPage.dart';
 import 'package:get_done/services/user/auth.dart';
 import 'package:get_done/services/user/changePassword.dart';
 import 'package:get_done/services/others/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_done/ad/ads.dart';
 
 String fullName = "";
 TextEditingController controller = TextEditingController();
@@ -141,13 +139,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        getuser.user!.email.toString(),
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.sourceSansPro(
-                          color: Theme.of(context).textTheme.headline2!.color,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20,
+                      Expanded(
+                        child: Text(
+                          getuser.user!.email.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.sourceSansPro(
+                            color: Theme.of(context).textTheme.headline2!.color,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ],

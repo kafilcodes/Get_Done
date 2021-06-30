@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/home/others/functions.dart';
 import 'package:get_done/home/others/utils.dart';
-import 'package:get_done/services/others/utils.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -33,9 +32,7 @@ class _CompletedTodosPageState extends State<CompletedTodosPage> {
       body: StreamBuilder(
         stream: HomeReference.homeref
             .where('isCompleted', isEqualTo: true)
-            .where('date', isGreaterThanOrEqualTo: date.start)
-            .where('date', isLessThanOrEqualTo: date.end)
-            .orderBy('date')
+            .orderBy('date', descending: true)
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
@@ -103,7 +100,7 @@ class _CompletedTodosPageState extends State<CompletedTodosPage> {
                             ),
                             trailing: IconButton(
                               icon: const Icon(
-                                Icons.auto_delete_outlined,
+                                Icons.delete_forever,
                                 color: Colors.redAccent,
                                 size: 27,
                               ),

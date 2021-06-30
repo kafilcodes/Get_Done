@@ -163,6 +163,7 @@ class _LoginPageState extends State<LoginPage>
     emailController.dispose();
     passwordController.dispose();
     controller.dispose();
+    Animate;
     super.dispose();
     print("DISPOSE - LoginPage");
   }
@@ -453,16 +454,16 @@ class _LoginPageState extends State<LoginPage>
                                 textAlign: TextAlign.end),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Text("Sign In without Password",
-                              style: GoogleFonts.sourceSansPro(
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              textAlign: TextAlign.end),
-                        ),
-                        const SizedBox(height: 50),
+
+                        // Container(
+                        //   alignment: Alignment.centerRight,
+                        //   child: Text("Sign In without Password",
+                        //       style: GoogleFonts.sourceSansPro(
+                        //         color: Theme.of(context).backgroundColor,
+                        //       ),
+                        //       textAlign: TextAlign.end),
+                        // ),
+                        const SizedBox(height: 60),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 20),
                           child: Row(

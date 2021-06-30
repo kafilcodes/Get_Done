@@ -108,9 +108,9 @@ class _MyBannerAdState extends State<MyBannerAd> {
     return _bannerAdLoaded
         ? AdWidget(ad: bad)
         : const Center(
-            child: CircularProgressIndicator(
-              color: Colors.grey,
-              strokeWidth: 2,
+            child: SpinKitRipple(
+              color: Colors.red,
+              size: 35,
             ),
           );
   }

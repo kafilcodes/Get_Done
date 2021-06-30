@@ -1,7 +1,8 @@
 // ignore: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:get_done/ad/ads.dart';
+
+// import 'package:get_done/ad/ads.dart';
 import 'package:get_done/home/screens/add_Todos.dart';
 import 'package:get_done/home/screens/compeletedTodos.dart';
 import 'package:get_done/home/others/utils.dart';
@@ -208,12 +209,13 @@ class _ToDoSectionState extends State<ToDoSection> {
     super.initState();
 
     tcontroller = TextEditingController();
-    const MyNativeAd();
+    // const MyNativeAd();
     HomeReference.homeref;
   }
 
   @override
   void dispose() {
+    searching;
     searchedText;
     tcontroller.clear();
     tcontroller.dispose();
@@ -225,7 +227,6 @@ class _ToDoSectionState extends State<ToDoSection> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-          enableFeedback: true,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           onPressed: () {
             HapticFeedback.lightImpact().whenComplete(() => Navigator.push(
@@ -270,6 +271,7 @@ class _ToDoSectionState extends State<ToDoSection> {
                             width: MediaQuery.of(context).size.width / 1.2,
                             height: 120,
                             child: CupertinoSearchTextField(
+                              itemColor: Colors.redAccent,
                               placeholder: "Search   Todos",
                               placeholderStyle: GoogleFonts.sourceSansPro(
                                 fontWeight: FontWeight.w300,
@@ -280,7 +282,6 @@ class _ToDoSectionState extends State<ToDoSection> {
                                     .headline2!
                                     .color,
                               ),
-                              autocorrect: false,
                               suffixMode: OverlayVisibilityMode.always,
                               suffixIcon: Icon(Icons.cancel,
                                   size: 22,
@@ -368,10 +369,9 @@ class _ToDoSectionState extends State<ToDoSection> {
                             // ignore: sized_box_for_whitespace
                             return const SizedBox(
                               width: double.infinity,
-                              height: 70,
+                              height: 15,
                               child: MyNativeAd(),
                             );
-                            // checkForAd();
                           },
                           // ignore: file_names
                         ),
@@ -382,7 +382,16 @@ class _ToDoSectionState extends State<ToDoSection> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Text("No Data Available Right Now ");
+            return Center(
+              child: Text(
+                "No Data Available Right Now :( ",
+                style: GoogleFonts.sourceSansPro(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(

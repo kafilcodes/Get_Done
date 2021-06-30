@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_done/home/others/functions.dart';
 import 'package:get_done/services/others/internet.dart';
 import 'package:get_done/services/others/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,10 @@ class _AddTimerState extends State<AddTimer> {
   @override
   void dispose() {
     super.dispose();
+    priority;
+    timerDuration;
+    taskTitle;
+    formKey3;
   }
 
   @override
@@ -55,7 +60,7 @@ class _AddTimerState extends State<AddTimer> {
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   padding: const EdgeInsets.all(5),
                   decoration: const BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.transparent,
                     shape: BoxShape.circle,
                     // borderRadius: BorderRadius.circular(10),
                   ),
@@ -325,6 +330,7 @@ class _AddTimerState extends State<AddTimer> {
                         await isInternet(context).whenComplete(
                           () => ref
                               .add({
+                                "color": Functions.prioritycolor(priority),
                                 "titleName": taskTitle,
                                 "duration": timerDuration,
                                 "priority": priority,

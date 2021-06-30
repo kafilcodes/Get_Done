@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hsv_color_pickers/hsv_color_pickers.dart';
 import 'package:get_done/notes/others/utils.dart';
@@ -30,7 +31,11 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void dispose() {
     super.dispose();
+    titleText;
+    descriptionText;
+
     updatedColor2;
+
     // ignore: avoid_print
     print("DISPOSE - Adding Notes Screen");
   }
@@ -65,10 +70,12 @@ class _AddScreenState extends State<AddScreen> {
           IconButton(
             icon: const Icon(Icons.done, color: Colors.white, size: 30),
             onPressed: () async {
+              FocusScope.of(context).unfocus();
               await isInternet(context).whenComplete(
                 () => Reference.ref.add({
                   "title": titleText,
                   "description": descriptionText,
+                  "date": FieldValue.serverTimestamp(),
                   "color": updatedColor2.value,
                   "textstyle": {
                     "bcolor": myStyle.textStyle.backgroundColor!.value,

@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/ad/ads.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/focus/screens/addTimer.dart';
 import 'package:get_done/focus/screens/animator.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,6 +36,7 @@ class _MyFocusPageState extends State<MyFocusPage> {
   @override
   void initState() {
     GoogleFonts.config;
+    ref;
     super.initState();
     print("Focus Page INIT");
   }
@@ -43,6 +44,8 @@ class _MyFocusPageState extends State<MyFocusPage> {
   @override
   void dispose() {
     super.dispose();
+    isSelected;
+    mycolor;
     print("Focus Page Dispose");
   }
 
@@ -57,7 +60,6 @@ class _MyFocusPageState extends State<MyFocusPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        enableFeedback: true,
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         child: const Icon(Icons.add, color: Colors.deepPurpleAccent, size: 35),
@@ -68,12 +70,7 @@ class _MyFocusPageState extends State<MyFocusPage> {
         },
       ),
       body: StreamBuilder(
-        stream: ref
-            .where('date', isGreaterThanOrEqualTo: date.start)
-            .where('date', isLessThanOrEqualTo: date.end)
-            .limit(5)
-            .orderBy('date')
-            .snapshots(),
+        stream: ref.limit(5).orderBy('date', descending: true).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             var ds = snapshot.data!.docs;
@@ -109,12 +106,14 @@ class _MyFocusPageState extends State<MyFocusPage> {
                           Column(
                             children: [
                               Container(
-                                child: Text(
-                                  "${sum.inMinutes.toString()} Min.",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                child: Expanded(
+                                  child: Text(
+                                    "${sum.inMinutes.toString()} Min.",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -148,12 +147,14 @@ class _MyFocusPageState extends State<MyFocusPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                child: Text(
-                                  snapshot.data!.docs.length.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                child: Expanded(
+                                  child: Text(
+                                    snapshot.data!.docs.length.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -206,19 +207,19 @@ class _MyFocusPageState extends State<MyFocusPage> {
                               onLongPress: toggleSelection,
                               title: Text(
                                 documentSnapshot["titleName"],
+                                overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.sourceSansPro(
-                                  fontSize: 25,
+                                  fontSize: 23,
                                   color: Colors.deepPurpleAccent,
                                   fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
                                 ),
                               ),
                               subtitle: Text(
                                 documentSnapshot["duration"],
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.sourceSansPro(
-                                  fontSize: 18,
+                                  fontSize: 17,
                                   color: Theme.of(context)
                                       .textTheme
                                       .headline1!
@@ -227,28 +228,37 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                   fontStyle: FontStyle.italic,
                                 ),
                               ),
-                              leading: Text(
-                                documentSnapshot["priority"],
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic),
-                              ),
+                              leading: isSelected
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isSelected = false;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.done,
+                                        size: 30,
+                                        color: Colors.deepPurpleAccent,
+                                      ))
+                                  : Text(
+                                      documentSnapshot["priority"],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color:
+                                              Color(documentSnapshot["color"])
+                                                  .withOpacity(0.8),
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic),
+                                    ),
                               trailing: isSelected
                                   ? IconButton(
                                       icon: const Icon(Icons.delete_outline,
                                           color: Colors.red, size: 25),
                                       onPressed: () {
                                         HapticFeedback.lightImpact();
-                                        // setState(() {
+
                                         deleteFocus(documentSnapshot.id);
-                                        // isSelected = false;
-                                        // });
-                                        setState(() {
-                                          isSelected = false;
-                                        });
                                       })
                                   : IconButton(
                                       icon: const Icon(
@@ -282,7 +292,10 @@ class _MyFocusPageState extends State<MyFocusPage> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Text("No Data Available Right Now ");
+            return const Text(
+              "No Data Available Right Now ",
+              overflow: TextOverflow.ellipsis,
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(
