@@ -8,9 +8,6 @@ class HomeReference {
       .doc(getuser.user!.uid)
       .collection("MyTodos");
 
-  static DocumentReference homedocref = FirebaseFirestore.instance
-      .collection("users")
-      .doc(getuser.user!.uid)
-      .collection("MyTodos")
-      .doc();
+  static CollectionReference<Map<String, dynamic>> subref =
+      homeref.doc().collection("subtasks");
 }

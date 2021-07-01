@@ -19,16 +19,17 @@ class TodoWidget extends StatefulWidget {
 class _TodoWidgetState extends State<TodoWidget> {
   bool isExpand = false;
   bool update = false;
+  late TextEditingController scontroller;
 
   @override
   void initState() {
     super.initState();
     GoogleFonts.config;
+    scontroller = TextEditingController();
   }
 
   @override
   void dispose() {
-/*    player.dispose();*/
     super.dispose();
   }
 
@@ -42,15 +43,15 @@ class _TodoWidgetState extends State<TodoWidget> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         child: Card(
-          elevation: 3,
-          shadowColor: Color(widget.docsnap["color"]).withOpacity(0.9),
+          color: Color(widget.docsnap["color"]).withOpacity(0.8),
+          elevation: 0,
           margin: const EdgeInsets.all(8),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           child: ExpansionTile(
-            textColor: Colors.redAccent,
-            iconColor: Colors.redAccent,
+            textColor: Theme.of(context).textTheme.headline2!.color,
+            iconColor: Theme.of(context).textTheme.headline2!.color,
             leading: Checkbox(
                 onChanged: (bool? value) {
                   HapticFeedback.heavyImpact()
@@ -91,10 +92,9 @@ class _TodoWidgetState extends State<TodoWidget> {
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.notoSans(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 16,
-                        color: Colors.redAccent,
-                      ),
+                          fontStyle: FontStyle.italic,
+                          fontSize: 16,
+                          color: Colors.grey),
                     ),
                     const SizedBox(
                       width: 20,
@@ -104,6 +104,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.notoSans(
+                          color: Theme.of(context).textTheme.headline2!.color,
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w200),

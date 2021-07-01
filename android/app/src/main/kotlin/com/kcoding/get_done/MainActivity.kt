@@ -1,4 +1,4 @@
-package com.example.kcoding.get_done
+package com.kcoding.get_done
 
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin

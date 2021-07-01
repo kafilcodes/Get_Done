@@ -19,17 +19,17 @@ class Functions {
     }
   }
 
-  static List<Subtask> subtasks = [];
-  //---------------------Delete Todos ---------------------------
   static deleteTodos(item) {
     DocumentReference delref = HomeReference.homeref.doc(item);
 
-    delref.delete().whenComplete(() {
-      // ignore: avoid_print
-      print(" TODO - $item Deleted");
-    });
+    delref.delete();
   }
-  //-------------------------------------------------------------
+
+  static deleteSubtasks(item) {
+    DocumentReference delsref = HomeReference.subref.doc(item);
+
+    delsref.delete();
+  }
 
   static createTodos() {
     DocumentReference docref = HomeReference.homeref.doc();
@@ -42,19 +42,12 @@ class Functions {
       "date": FieldValue.serverTimestamp(),
       "isCompleted": false,
       "desc": todoDescription,
-      // "subtask": subtasks.asMap()
     };
 
-    docref.set(todos).whenComplete(() {
-      // ignore: avoid_print
-      print(" TODO $todoTitle created");
-    });
+    if (todoTitle.isEmpty) {
+      return null;
+    } else {
+      return docref.set(todos);
+    }
   }
-}
-
-class Subtask {
-  String? title;
-  bool completed;
-
-  Subtask({required this.title, required this.completed});
 }

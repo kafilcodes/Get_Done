@@ -368,8 +368,8 @@ class _ToDoSectionState extends State<ToDoSection> {
                             // ignore: sized_box_for_whitespace
                             return const SizedBox(
                               width: double.infinity,
-                              height: 50,
-                              child: MyNativeAd(),
+                              height: 10,
+                              // child: MyNativeAd(s),
                             );
                           },
                           // ignore: file_names

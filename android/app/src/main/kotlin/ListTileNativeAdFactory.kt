@@ -1,4 +1,4 @@
-package com.example.kcoding.get_done
+package com.kcoding.get_done
 
 
 import android.content.Context
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
-import com.example.kcoding.get_done.R
+import com.kcoding.get_done.R
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 

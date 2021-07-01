@@ -16,14 +16,16 @@ class _AddTodosState extends State<AddTodos> {
   void initState() {
     super.initState();
     GoogleFonts.config;
-    scontroller = TextEditingController();
+    // scontroller = TextEditingController();
   }
 
   @override
   void dispose() {
-    Functions.subtasks.clear();
     super.dispose();
     scontroller.dispose();
+    Functions.todoTitle;
+    // Functions.subtaskt;
+    Functions.todoDescription;
   }
 
   @override

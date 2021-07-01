@@ -183,7 +183,7 @@ class _MyFocusPageState extends State<MyFocusPage> {
                       width: double.infinity,
                       height: 420,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ListView.builder(
@@ -198,7 +198,10 @@ class _MyFocusPageState extends State<MyFocusPage> {
                           }
 
                           return Card(
+                            color: Colors.transparent,
                             child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 10),
                               selected: isSelected,
                               onLongPress: toggleSelection,
                               title: Text(
@@ -207,7 +210,8 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.sourceSansPro(
                                   fontSize: 23,
-                                  color: Colors.deepPurpleAccent,
+                                  color: Color(documentSnapshot["color"])
+                                      .withOpacity(0.8),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -258,9 +262,10 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                         deleteFocus(documentSnapshot.id);
                                       })
                                   : IconButton(
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.play_circle_filled_sharp,
-                                        color: Colors.deepPurpleAccent,
+                                        color: Color(documentSnapshot["color"])
+                                            .withOpacity(0.8),
                                         size: 30,
                                       ),
                                       onPressed: () {

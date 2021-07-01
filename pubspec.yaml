@@ -45,7 +45,7 @@ dev_dependencies:
 
   flutter_lints: ^1.0.3
 #  flutter_launcher_icons: ^0.9.0
-  flutter_native_splash: ^1.2.0
+#  flutter_native_splash: ^1.2.0
 
 #
 #flutter_icons:
@@ -64,15 +64,15 @@ flutter:
     - assets/sounds/
 
   uses-material-design: true
-
-flutter_native_splash:
-  color: "#000000"
-  image: assets/images/ic_launcher.png
-  android: true
-  ios: true
-  fullscreen : true
-  android12 : true
-  android_gravity : center
+#
+#flutter_native_splash:
+#  color: "#000000"
+#  image: assets/images/ic_launcher.png
+#  android: true
+#  ios: true
+#  fullscreen : true
+#  android12 : true
+#  android_gravity : center
 
 
 

@@ -61,7 +61,18 @@ class _SignUpPageState extends State<SignUpPage>
         {
           "date": FieldValue.serverTimestamp(),
           "name": _name,
+          "email": _email,
         },
+      );
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection("MyTodos")
+          .doc()
+          .collection("subtasks")
+          .doc()
+          .set(
+        {},
       );
       const CircularProgressIndicator();
       // ignore: avoid_print
