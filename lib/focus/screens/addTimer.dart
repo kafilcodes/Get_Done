@@ -309,6 +309,7 @@ class _AddTimerState extends State<AddTimer> {
                       ),
                     ),
                     onPressed: () async {
+                      FocusScope.of(context).unfocus();
                       if (formKey3.currentState!.validate()) {
                         await isInternet(context).whenComplete(
                           () => ref.add({

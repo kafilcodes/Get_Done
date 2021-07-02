@@ -8,7 +8,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get_done/services/others/internet.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -32,30 +31,17 @@ class _SignUpPageState extends State<SignUpPage>
   bool showPass2 = false;
   late Animation<Color?> animation2;
   late AnimationController controller2;
-  // ignore: non_constant_identifier_names
   bool Animate2 = false;
-  // String _password = "";
-  final snackbarDone = SnackBar(
-    width: double.infinity,
-    backgroundColor: Colors.grey,
-    content: Text(
-      "Done",
-      textAlign: TextAlign.center,
-    ),
-  );
-  // ---------------------------------------------------------------------------
-//-------------------------CreateUser-------------------------------------------
+
   Future<void> _createUser() async {
     try {
       // ignore:  avoid_print
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: _email,
-            password: confirmpassword.text,
-          )
-          .whenComplete(
-            () => ScaffoldMessenger.of(context).showSnackBar(snackbarDone),
-          );
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _email,
+        password: confirmpassword.text,
+      );
+
       User? user = userCredential.user;
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
         {
@@ -64,16 +50,7 @@ class _SignUpPageState extends State<SignUpPage>
           "email": _email,
         },
       );
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection("MyTodos")
-          .doc()
-          .collection("subtasks")
-          .doc()
-          .set(
-        {},
-      );
+
       const CircularProgressIndicator();
       // ignore: avoid_print
 
@@ -81,7 +58,8 @@ class _SignUpPageState extends State<SignUpPage>
 
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } on FirebaseAuthException catch (e) {
-      showSimpleNotification(Text(e.toString()));
+      showSimpleNotification(Text(e.toString()),
+          background: Colors.yellowAccent.withOpacity(0.8));
       setState(() {
         Animate2 = false;
       });
@@ -112,6 +90,7 @@ class _SignUpPageState extends State<SignUpPage>
       // ignore: avoid_print
       showSimpleNotification(
         Text("INVALID DETAILS "),
+        background: Colors.redAccent,
       );
     }
   }
@@ -545,8 +524,9 @@ class _SignUpPageState extends State<SignUpPage>
                           width: 300,
                           height: 60,
                           decoration: BoxDecoration(
-                              color: Colors.cyanAccent,
-                              borderRadius: BorderRadius.circular(15)),
+                            color: Colors.cyanAccent,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: OutlinedButton(
                             style: const ButtonStyle(),
                             onPressed: () async {
@@ -557,6 +537,11 @@ class _SignUpPageState extends State<SignUpPage>
                                 await isInternet(context).whenComplete(
                                   () => _createUser(),
                                 );
+
+                                // showSimpleNotification(
+                                //   Text("Done"),
+                                //   background: Colors.greenAccent,
+
                               }
                             },
                             child: Text(

@@ -59,6 +59,7 @@ class _AddTodosState extends State<AddTodos> {
             alignment: Alignment.center,
             padding: const EdgeInsets.only(right: 35),
             onPressed: () async {
+              FocusScope.of(context).unfocus();
               await isInternet(context).whenComplete(
                 () => Functions.createTodos(),
               );

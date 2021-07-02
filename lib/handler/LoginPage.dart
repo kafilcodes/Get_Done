@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage>
   String _email = "";
   String _password = "";
   AuthClass authClass = AuthClass();
-  bool loading = false;
+  // bool loading = false;
   final formKey = GlobalKey<FormState>();
   late Animation<Color?> animation;
   late AnimationController controller;
@@ -50,13 +50,10 @@ class _LoginPageState extends State<LoginPage>
         if (userCredential.user == null) {
           setState(() {
             Animate = false;
-            final snackbar = SnackBar(
-                backgroundColor: Colors.yellowAccent.withOpacity(0.8),
-                width: double.infinity,
-                duration: Duration(seconds: 2),
-                content: const Text("Please Enter Valid Details"));
-            ScaffoldMessenger.of(context).showSnackBar(snackbar);
-            loading = false;
+            showSimpleNotification(
+              Text("Invalid Details"),
+              background: Colors.red,
+            );
           });
         }
       }
@@ -64,50 +61,13 @@ class _LoginPageState extends State<LoginPage>
       setState(() {
         Animate = false;
         _error = e.message!;
-        final snackbarError = SnackBar(
-          width: double.infinity,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-          ),
-          margin: const EdgeInsets.all(22),
-          padding: const EdgeInsets.all(5),
-          elevation: 0,
-          content: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  color: Colors.yellow,
-                  size: 20,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  _error,
-                  maxLines: 3,
-                  style: GoogleFonts.sourceSansPro(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          backgroundColor: Colors.redAccent.withOpacity(0.7),
-          duration: const Duration(seconds: 3),
-          behavior: SnackBarBehavior.floating,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackbarError);
+        showSimpleNotification(Text(_error), background: Colors.redAccent);
       });
     } catch (e) {
       setState(() {
         Animate = false;
+        showSimpleNotification(Text(e.toString()),
+            background: Colors.redAccent);
       });
     }
   }
@@ -171,7 +131,6 @@ class _LoginPageState extends State<LoginPage>
     _error;
     _email;
     _password;
-    loading;
 
     super.dispose();
   }

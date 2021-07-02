@@ -15,6 +15,7 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   String titleText = "";
   String descriptionText = "";
+  String tag = "";
   Color updatedColor2 = Color(Colors.redAccent.value);
   @override
   void initState() {
