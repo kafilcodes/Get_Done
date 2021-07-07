@@ -228,8 +228,9 @@ class _ToDoSectionState extends State<ToDoSection> {
       floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           onPressed: () {
-            HapticFeedback.lightImpact().whenComplete(() => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddTodos())));
+            HapticFeedback.lightImpact().whenComplete(() =>
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => AddTodos())));
           },
           child: Icon(Icons.add,
               color: Colors.redAccent.withOpacity(1), size: 35)),
@@ -368,8 +369,8 @@ class _ToDoSectionState extends State<ToDoSection> {
                             // ignore: sized_box_for_whitespace
                             return const SizedBox(
                               width: double.infinity,
-                              height: 10,
-                              // child: MyNativeAd(s),
+                              height: 50,
+                              child: MyNativeAd(),
                             );
                           },
                           // ignore: file_names

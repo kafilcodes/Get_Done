@@ -1,16 +1,9 @@
 import 'package:get_done/ad/ads.dart';
-import 'package:get_done/services/notifications/firebase_notification_handler.dart';
-import 'package:get_done/theme/app_theme_provider.dart';
+import 'package:get_done/services/settings/widgets/SettiingsWidget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get_done/services/user/auth.dart';
-import 'package:get_done/services/user/changePassword.dart';
 import 'package:get_done/services/others/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-String fullName = "";
-TextEditingController controller = TextEditingController();
 
 // ignore: use_key_in_widget_constructors
 class SettingsPage extends StatefulWidget {
@@ -19,10 +12,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  // ignore: non_constant_identifier_names
-  bool DarkMode = false;
-  bool isSwitched = true;
-
   @override
   void initState() {
     super.initState();
@@ -31,66 +20,11 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void dispose() {
     super.dispose();
-    DarkMode;
-    isSwitched;
+    SettingsWidget();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _appThemeStateProvider = context.read(appThemeStateProvider.notifier);
-    List<String> settingString = [
-      "Change Password",
-      "Dark Mode",
-      "Push Notification",
-      "Sign Out",
-    ];
-
-    List<Widget> settingTrailing = [
-      IconButton(
-        icon: Icon(
-          Icons.chevron_right,
-          color: Theme.of(context).iconTheme.color,
-          size: 40,
-        ),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ChangePasswordPage()));
-        },
-      ),
-      Switch.adaptive(
-          activeColor: Theme.of(context).iconTheme.color,
-
-// ignore: invalid_use_of_protected_member
-          value: _appThemeStateProvider.state,
-          onChanged: (value) {
-            _appThemeStateProvider.toggleAppTheme(context);
-          }),
-      Switch.adaptive(
-        activeColor: Theme.of(context).iconTheme.color,
-// ignore: invalid_use_of_protected_member
-        value: isSwitched,
-        onChanged: (value) async {
-          isSwitched
-              ? FirebaseNotification().dpnsubscribe()
-              : FirebaseNotification().dpnunsubscribe();
-
-          setState(() {
-            isSwitched = !isSwitched;
-          });
-        },
-      ),
-      IconButton(
-        icon: Icon(
-          Icons.logout,
-          color: Theme.of(context).iconTheme.color,
-          size: 32,
-        ),
-        onPressed: () async {
-          await AuthClass().signOutUser(context);
-        },
-      ),
-    ];
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -122,6 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
           height: MediaQuery.of(context).size.height,
           color: Colors.black26,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             controller: ScrollController(),
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -180,39 +115,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  width: double.infinity,
-                  height: 310,
-                  decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: ListView.builder(
-                      itemCount: settingString.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          margin: const EdgeInsets.all(10),
-                          child: ListTile(
-                            title: Text(
-                              settingString[index],
-                              style: GoogleFonts.sourceSansPro(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .color,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            trailing: settingTrailing[index],
-                          ),
-                        );
-                      }),
-                ),
+                SettingsWidget(),
                 const SizedBox(
                   width: double.infinity,
                   height: 500,

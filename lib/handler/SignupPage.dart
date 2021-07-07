@@ -21,7 +21,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage>
     with SingleTickerProviderStateMixin {
-  //---------------------declarations-------------------------------------------
   AuthClass authClass = AuthClass();
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
@@ -52,13 +51,20 @@ class _SignUpPageState extends State<SignUpPage>
       );
 
       const CircularProgressIndicator();
-      // ignore: avoid_print
 
-      // ignore: avoid_print
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
-      showSimpleNotification(Text(e.toString()),
+      showSimpleNotification(
+          Text(
+            e.message,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.sourceSansPro(color: Colors.white, fontSize: 17),
+          ),
           background: Colors.yellowAccent.withOpacity(0.8));
       setState(() {
         Animate2 = false;
@@ -73,9 +79,7 @@ class _SignUpPageState extends State<SignUpPage>
 
     }
   }
-  // ---------------------------------------------------------------------------
 
-// ------------validation-------------------------------------------------------
   final formKey = GlobalKey<FormState>();
   void validateAndSave() {
     final form = formKey.currentState;
@@ -98,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage>
 
   @override
   void initState() {
+    GoogleFonts.config;
     super.initState();
     controller2 = AnimationController(
       vsync: this,
@@ -127,6 +132,10 @@ class _SignUpPageState extends State<SignUpPage>
 
   @override
   void dispose() {
+    _name;
+    showPass;
+    showPass2;
+
     password.dispose();
     confirmpassword.dispose();
     controller2.dispose();
@@ -165,6 +174,7 @@ class _SignUpPageState extends State<SignUpPage>
       ),
       body: Center(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: SafeArea(
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -175,20 +185,16 @@ class _SignUpPageState extends State<SignUpPage>
                 children: [
                   // ignore: avoid_unnecessary_containers
                   Container(
-                    child: Column(
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const Icon(
-                          Icons.person_pin_rounded,
-                          color: Colors.cyanAccent,
-                          size: 200,
-                        )
-                      ],
+                    child: Image(
+                      alignment: Alignment.center,
+                      width: 280,
+                      height: 250,
+                      image: AssetImage(
+                        "assets/images/ic_launcher.png",
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+
                   Container(
                     margin:
                         const EdgeInsets.symmetric(horizontal: 40, vertical: 7),
@@ -219,7 +225,7 @@ class _SignUpPageState extends State<SignUpPage>
                               cursorColor: Colors.cyanAccent,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 19,
                               ),
                               textDirection: TextDirection.ltr,
                               onChanged: (value) {
@@ -238,6 +244,10 @@ class _SignUpPageState extends State<SignUpPage>
                               autofillHints: [AutofillHints.newUsername],
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                    fontSize: 18,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.normal),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide(
@@ -288,7 +298,7 @@ class _SignUpPageState extends State<SignUpPage>
                               cursorColor: Colors.cyanAccent,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 19,
                               ),
                               textDirection: TextDirection.ltr,
                               onChanged: (value) {
@@ -312,6 +322,9 @@ class _SignUpPageState extends State<SignUpPage>
                               autofillHints: [AutofillHints.email],
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                  fontSize: 18,
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(Colors.cyanAccent.value),
@@ -359,7 +372,7 @@ class _SignUpPageState extends State<SignUpPage>
                               cursorColor: Colors.cyanAccent,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 19,
                               ),
                               textDirection: TextDirection.ltr,
                               controller: password,
@@ -380,6 +393,9 @@ class _SignUpPageState extends State<SignUpPage>
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: showPass,
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                  fontSize: 18,
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(Colors.cyanAccent.value),
@@ -443,7 +459,7 @@ class _SignUpPageState extends State<SignUpPage>
                               cursorColor: Colors.cyanAccent,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 19,
                               ),
                               textDirection: TextDirection.ltr,
                               controller: confirmpassword,
@@ -475,6 +491,9 @@ class _SignUpPageState extends State<SignUpPage>
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: showPass2,
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                  fontSize: 18,
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(Colors.cyanAccent.value),
@@ -518,17 +537,15 @@ class _SignUpPageState extends State<SignUpPage>
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          width: 300,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.cyanAccent,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
+                        const SizedBox(height: 35),
+                        SizedBox(
+                          height: 50,
+                          width: 200,
                           child: OutlinedButton(
-                            style: const ButtonStyle(),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.cyanAccent),
+                            ),
                             onPressed: () async {
                               HapticFeedback.mediumImpact();
 
@@ -537,11 +554,6 @@ class _SignUpPageState extends State<SignUpPage>
                                 await isInternet(context).whenComplete(
                                   () => _createUser(),
                                 );
-
-                                // showSimpleNotification(
-                                //   Text("Done"),
-                                //   background: Colors.greenAccent,
-
                               }
                             },
                             child: Text(

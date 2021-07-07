@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, User, UserCredential;
 import 'package:flutter/material.dart';
 import 'package:get_done/handler/LoginPage.dart';
+import 'package:get_done/home/Home.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class AuthClass {
   GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -26,7 +28,15 @@ class AuthClass {
 
   Future<void> googleSignIn(BuildContext context) async {
     try {
-      GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn().whenComplete(
+                () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Home(),
+                  ),
+                ),
+              );
       if (googleSignInAccount != null) {
         GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -39,19 +49,15 @@ class AuthClass {
           UserCredential userCredential =
               await auth.signInWithCredential(credential);
         } catch (e) {
-          final snackbar =
-              SnackBar(width: double.infinity, content: Text(e.toString()));
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          showSimpleNotification(Text("${e.toString()}"),
+              background: Colors.yellowAccent.withOpacity(0.8));
         }
       } else {
-        final snackbar =
-            SnackBar(width: double.infinity, content: Text("Not able to Sign"));
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        showSimpleNotification(Text("NOT ABLE TO SIGN IN "),
+            background: Colors.redAccent.withOpacity(0.8));
       }
     } catch (e) {
-      final snackbar =
-          SnackBar(width: double.infinity, content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      showSimpleNotification(Text("${e.toString()}"));
     }
   }
 

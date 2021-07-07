@@ -41,9 +41,13 @@ class MyApp extends ConsumerWidget {
         home: AnimatedSplashScreen(
           duration: 1,
           animationDuration: Duration(seconds: 1),
-          splash: Image.asset("assets/images/ic_launcher.png"),
+          splash: Image.asset(
+            "assets/images/ic_launcher.png",
+            width: 200,
+            height: 200,
+          ),
           nextScreen: LandingPage(),
-          splashIconSize: 100,
+          splashIconSize: 180,
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: Colors.black,
         ),

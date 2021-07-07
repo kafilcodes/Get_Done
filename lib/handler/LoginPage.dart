@@ -51,7 +51,11 @@ class _LoginPageState extends State<LoginPage>
           setState(() {
             Animate = false;
             showSimpleNotification(
-              Text("Invalid Details"),
+              Text(
+                "Invalid Details",
+                style: GoogleFonts.sourceSansPro(
+                    color: Colors.white, fontSize: 17),
+              ),
               background: Colors.red,
             );
           });
@@ -60,13 +64,27 @@ class _LoginPageState extends State<LoginPage>
     } on FirebaseAuthException catch (e) {
       setState(() {
         Animate = false;
-        _error = e.message!;
-        showSimpleNotification(Text(_error), background: Colors.redAccent);
+
+        showSimpleNotification(
+            Text(
+              e.message,
+              textAlign: TextAlign.center,
+              style:
+                  GoogleFonts.sourceSansPro(color: Colors.white, fontSize: 17),
+            ),
+            background: Colors.redAccent);
       });
     } catch (e) {
       setState(() {
         Animate = false;
-        showSimpleNotification(Text(e.toString()),
+
+        showSimpleNotification(
+            Text(
+              e.toString(),
+              textAlign: TextAlign.center,
+              style:
+                  GoogleFonts.sourceSansPro(color: Colors.white, fontSize: 17),
+            ),
             background: Colors.redAccent);
       });
     }
@@ -151,6 +169,7 @@ class _LoginPageState extends State<LoginPage>
       backgroundColor: Colors.black26,
       body: Center(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: SafeArea(
             child: Form(
               key: formKey,
@@ -174,7 +193,7 @@ class _LoginPageState extends State<LoginPage>
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 7),
                     child: Text(
-                      "Sign with your email and password \n    or continue with Google Sign In. ",
+                      "Sign with your email and password \n          or continue with Google ",
                       style: GoogleFonts.sourceSansPro(
                         color: Colors.white70,
                         fontStyle: FontStyle.italic,
@@ -243,6 +262,10 @@ class _LoginPageState extends State<LoginPage>
                               },
                               autofocus: false,
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                    fontSize: 18,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.normal),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(Colors.white.value),
@@ -319,6 +342,10 @@ class _LoginPageState extends State<LoginPage>
                                 _password = value;
                               },
                               decoration: InputDecoration(
+                                errorStyle: GoogleFonts.sourceSansPro(
+                                    fontSize: 18,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.normal),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(Colors.red.value),
@@ -417,7 +444,7 @@ class _LoginPageState extends State<LoginPage>
                             },
                             child: Text("Forgot Password ?",
                                 style: GoogleFonts.sourceSansPro(
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).iconTheme.color),
                                 textAlign: TextAlign.end),
                           ),
                         ),
@@ -458,6 +485,7 @@ class _LoginPageState extends State<LoginPage>
                           text: TextSpan(
                             text: "Don't have an Account ?  ",
                             style: GoogleFonts.sourceSansPro(
+                              fontSize: 15,
                               color: Colors.white54,
                               fontStyle: FontStyle.italic,
                             ),
@@ -466,7 +494,7 @@ class _LoginPageState extends State<LoginPage>
                                   text: "Sign Up",
                                   style: GoogleFonts.sourceSansPro(
                                     fontStyle: FontStyle.italic,
-                                    fontSize: 16.0,
+                                    fontSize: 17.0,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                   ),

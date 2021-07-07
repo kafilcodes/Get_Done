@@ -54,7 +54,7 @@ class _MyNativeAdState extends State<MyNativeAd> {
           )
         : const Center(
             child: SpinKitRipple(
-              color: Colors.red,
+              color: Colors.white,
               size: 35,
             ),
           );
@@ -105,7 +105,7 @@ class _MyBannerAdState extends State<MyBannerAd> {
         ? AdWidget(ad: bad)
         : const Center(
             child: SpinKitRipple(
-              color: Colors.red,
+              color: Colors.white,
               size: 35,
             ),
           );

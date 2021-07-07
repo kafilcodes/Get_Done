@@ -1,6 +1,6 @@
+import 'package:get_done/notes/others/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/notes/screens/add_screen.dart';
-import 'package:get_done/notes/screens/edit_note_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_done/notes/others/utils.dart';
 import 'package:get_done/services/others/utils.dart';
@@ -138,78 +138,7 @@ class _NotesPageState extends State<NotesPage> {
                       endIndent: 90,
                     ),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: GridView.builder(
-                        controller: ScrollController(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2),
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (_, index) {
-                          return InkWell(
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditScreen(
-                                    docEdit: snapshot.data!.docs[index],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(15),
-                              padding: const EdgeInsets.all(15),
-                              height: 100,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color:
-                                    Color(snapshot.data!.docs[index]['color'])
-                                        .withOpacity(0.9),
-                                // myColor.selectedColor,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Text(
-                                      // snapshot.data.docs[index]['title'],
-                                      snapshot.data!.docs[index]['title'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: GoogleFonts.sourceSansPro(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 22,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 7),
-                                  Expanded(
-                                    child: Text(
-                                      snapshot.data!.docs[index]['description'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 6,
-                                      style: GoogleFonts.sourceSansPro(
-                                          color: Colors.black87,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  NotesWidgets(snaps: snapshot),
                 ],
               ),
             );
