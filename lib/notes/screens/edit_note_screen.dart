@@ -26,9 +26,6 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   void initState() {
-    myStyle.edited;
-    myStyle.textStyle;
-    myStyle.textAlign;
     title = TextEditingController(text: widget.docEdit["title"]);
     description = TextEditingController(text: widget.docEdit["description"]);
     myStyle.textStyle = TextStyle(
@@ -39,6 +36,9 @@ class _EditScreenState extends State<EditScreen> {
     );
     myColor.selectedColor = Color(widget.docEdit["color"]);
     updatedColor = Color(widget.docEdit["color"]);
+    myStyle.edited;
+    myStyle.textStyle;
+    myStyle.textAlign;
     super.initState();
   }
 
@@ -155,7 +155,7 @@ class _EditScreenState extends State<EditScreen> {
                     fontStyle: FontStyle.italic,
                     color: Colors.white70),
               ),
-              style: const TextStyle(
+              style: GoogleFonts.sourceSansPro(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,

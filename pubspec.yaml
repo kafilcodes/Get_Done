@@ -29,7 +29,7 @@ dependencies:
   args: ^2.1.1
   connectivity: ^3.0.6
   overlay_support: ^1.2.1
-  animated_splash_screen: ^1.1.0
+
 
 
   flutter:

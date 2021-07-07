@@ -1,4 +1,3 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -38,19 +37,7 @@ class MyApp extends ConsumerWidget {
             .read(appThemeProvider)
             .getAppThemedata(context, _appThemeState),
         debugShowCheckedModeBanner: false,
-        home: AnimatedSplashScreen(
-          duration: 1,
-          animationDuration: Duration(seconds: 1),
-          splash: Image.asset(
-            "assets/images/ic_launcher.png",
-            width: 200,
-            height: 200,
-          ),
-          nextScreen: LandingPage(),
-          splashIconSize: 180,
-          splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: Colors.black,
-        ),
+        home: LandingPage(),
       ),
     );
   }
