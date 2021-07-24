@@ -18,10 +18,15 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
   MobileAds.instance.initialize();
   final sharedPreferences = await SharedPreferences.getInstance();
-  runApp(ProviderScope(overrides: [
-    // override the previous value with the new object
-    sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-  ], child: MyApp()));
+  runApp(
+    ProviderScope(
+      overrides: [
+        // override the previous value with the new object
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 // ignore: use_key_in_widget_constructors

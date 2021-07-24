@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:get_done/services/audio/audio.dart';
 
 import 'package:get_done/services/others/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,8 +35,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   // ignore: must_call_super
   void initState() {
-    Audio.player;
-    Audio.player2;
     GoogleFonts.config;
     getuser();
     _tabController = TabController(vsync: this, length: 3);
@@ -50,8 +47,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    Audio.player2;
-    Audio.player;
     // TODO: implement dispose
     super.dispose();
     _tabController.dispose();

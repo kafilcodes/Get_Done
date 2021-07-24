@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart'
     show AuthCredential, FirebaseAuth, GoogleAuthProvider, User, UserCredential;
 import 'package:flutter/material.dart';
 import 'package:get_done/handler/LoginPage.dart';
-import 'package:get_done/home/Home.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class AuthClass {
+  late User user;
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -22,21 +22,20 @@ class AuthClass {
   }
 
   Future<String> currentUser() async {
-    final User? user = await auth.currentUser;
-    return user!.uid;
+    return user.uid;
   }
 
   Future<void> googleSignIn(BuildContext context) async {
     try {
-      GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn().whenComplete(
-                () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Home(),
-                  ),
-                ),
-              );
+      GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      // .whenComplete(
+      //   () => Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => Home(),
+      //     ),
+      //   ),
+      // );
       if (googleSignInAccount != null) {
         GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -46,8 +45,10 @@ class AuthClass {
         );
 
         try {
-          UserCredential userCredential =
+          final UserCredential userCredential =
               await auth.signInWithCredential(credential);
+
+          user = userCredential.user!;
         } catch (e) {
           showSimpleNotification(Text("${e.toString()}"),
               background: Colors.yellowAccent.withOpacity(0.8));

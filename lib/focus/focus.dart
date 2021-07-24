@@ -68,14 +68,14 @@ class _MyFocusPageState extends State<MyFocusPage> {
                       width: MediaQuery.of(context).size.width / 0.9,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          Spacer(),
                           Column(
                             children: [
                               Container(
@@ -84,7 +84,10 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                     "${sum.inMinutes.toString()} Min.",
                                     style: TextStyle(
                                       fontSize: 25,
-                                      color: Colors.white,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .color,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -94,28 +97,22 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                 height: 2,
                               ),
                               Container(
-                                child: const Text(
+                                child: Text(
                                   "Estimated Time",
                                   style: TextStyle(
                                     fontSize: 15,
-                                    color: Colors.white,
+                                    color: Colors.grey,
+                                    // Theme.of(context)
+                                    //     .textTheme
+                                    //     .headline2!
+                                    //     .color,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const Text(
-                              "|",
-                              style: const TextStyle(
-                                fontSize: 35,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                          Spacer(flex: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -123,9 +120,12 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                 child: Expanded(
                                   child: Text(
                                     snapshot.data!.docs.length.toString(),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 25,
-                                      color: Colors.white,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .color,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -135,17 +135,22 @@ class _MyFocusPageState extends State<MyFocusPage> {
                                 height: 2,
                               ),
                               Container(
-                                child: const Text(
+                                child: Text(
                                   "Total Tasks",
                                   style: TextStyle(
                                     fontSize: 15,
-                                    color: Colors.white,
+                                    color: Colors.grey,
+                                    // Theme.of(context)
+                                    //     .textTheme
+                                    //     .headline2!
+                                    //     .color,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ],
                           ),
+                          Spacer(),
                         ],
                       ),
                     ),

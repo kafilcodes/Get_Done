@@ -84,7 +84,7 @@ class _CompletedTodosPageState extends State<CompletedTodosPage> {
                                   HapticFeedback.lightImpact();
                                   documentSnapshot.reference.update({
                                     "isCompleted": false,
-                                    "subtask.tasks.completed": false
+                                    // "subtask.tasks.completed": false
                                   });
                                 },
                                 value: documentSnapshot["isCompleted"]),

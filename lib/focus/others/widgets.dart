@@ -26,6 +26,8 @@ class _FocusWidgetState extends State<FocusWidget> {
 
   @override
   void dispose() {
+    isSelected;
+    mycolor;
     super.dispose();
   }
 
@@ -64,6 +66,7 @@ class _FocusWidgetState extends State<FocusWidget> {
           return Card(
             color: Colors.transparent,
             child: ListTile(
+              // tileColor: Colors.transparent,
               contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               selected: isSelected,
               onLongPress: toggleSelection,

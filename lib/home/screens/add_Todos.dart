@@ -15,17 +15,14 @@ class _AddTodosState extends State<AddTodos> {
   @override
   void initState() {
     super.initState();
+    scontroller = TextEditingController();
     GoogleFonts.config;
-    // scontroller = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
     scontroller.dispose();
-    Functions.todoTitle;
-    // Functions.subtaskt;
-    Functions.todoDescription;
   }
 
   @override
@@ -121,6 +118,107 @@ class _AddTodosState extends State<AddTodos> {
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
                         color: Theme.of(context).iconTheme.color),
+                  ),
+                ),
+              ),
+              Divider(
+                indent: 70,
+                endIndent: 70,
+                thickness: 2,
+                color: Theme.of(context).iconTheme.color,
+              ),
+
+              Container(
+                alignment: Alignment.center,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  autofocus: false,
+                  autocorrect: false,
+                  controller: scontroller,
+                  style: GoogleFonts.sourceSansPro(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  onSubmitted: (subtasktext) {
+                    Functions.keys.add(subtasktext);
+                    Functions.values.add(false);
+                    scontroller.clear();
+                    setState(() {});
+                  },
+                  maxLines: 1,
+                  cursorColor: Theme.of(context).iconTheme.color,
+                  textInputAction: TextInputAction.done,
+                  textDirection: TextDirection.ltr,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    suffix: IconButton(
+                      icon: Icon(
+                        Icons.add_box_rounded,
+                        color: Colors.redAccent,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Functions.keys.add(scontroller.text);
+                        Functions.values.add(false);
+                        scontroller.clear();
+                        setState(() {});
+                      },
+                    ),
+                    border: InputBorder.none,
+                    hintText: 'Enter Subtask',
+                    hintStyle: GoogleFonts.sourceSansPro(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Theme.of(context).iconTheme.color),
+                  ),
+                ),
+              ),
+
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  width: double.infinity,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.transparent,
+                  ),
+                  child: ListView.builder(
+                    itemCount: Functions.keys.length,
+                    itemBuilder: (context, index) => ListTile(
+                      title: Text(
+                        "${Functions.keys[index]}",
+                        style: GoogleFonts.sourceSansPro(
+                          color: Theme.of(context).iconTheme.color,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      leading: Icon(
+                        Icons.check_box_outline_blank,
+                        color: Theme.of(context).iconTheme.color,
+                        size: 20,
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.cancel_sharp,
+                          size: 20,
+                          color: Colors.red.withOpacity(0.5),
+                        ),
+                        onPressed: () {
+                          Functions.keys.removeAt(index);
+                          Functions.values.removeAt(index);
+                          setState(() {});
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ),

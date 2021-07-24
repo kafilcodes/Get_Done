@@ -8,6 +8,8 @@ class Functions {
   static String todoDescription = "";
   static String title = "";
   static String priority = "High";
+  static List<String> keys = [];
+  static List<bool> values = [];
 
   static prioritycolor(String p) {
     if (p == "High") {
@@ -34,6 +36,12 @@ class Functions {
   static createTodos() {
     DocumentReference docref = HomeReference.homeref.doc();
 
+    Map<String, dynamic> resultMap = {};
+
+    for (var i = 0; i < keys.length; i++) {
+      resultMap["${keys[i]}"] = values[i];
+    }
+
     //Map
     Map<String, dynamic> todos = {
       "color": prioritycolor(priority),
@@ -42,12 +50,22 @@ class Functions {
       "date": FieldValue.serverTimestamp(),
       "isCompleted": false,
       "desc": todoDescription,
+      "subtask": resultMap,
     };
 
     if (todoTitle.isEmpty) {
       return null;
     } else {
-      return docref.set(todos);
+      clearData() {
+        keys.clear();
+        values.clear();
+        todoTitle = "";
+        todoDescription = "";
+      }
+
+      return docref.set(todos).whenComplete(
+            () => clearData(),
+          );
     }
   }
 }

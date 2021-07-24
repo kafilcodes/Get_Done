@@ -1,21 +1,17 @@
-import 'package:just_audio/just_audio.dart' show AudioPlayer;
+import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 
 class Audio {
-  static late AudioPlayer player = AudioPlayer();
-  static late AudioPlayer player2 = AudioPlayer();
+  static FlutterSoundRecorder myRecorder = FlutterSoundRecorder();
 
-  static void playsound() async {
-    await player.setAsset("assets/sounds/3.wav");
-
-    player.load();
-    player.play();
-    player.setSpeed(2);
+  static Future<void> record() async {
+    await myRecorder.startRecorder(
+      toFile: "assets/record/",
+      codec: Codec.aacADTS,
+    );
   }
 
-  static void playsound2() async {
-    await player2.setAsset("assets/sounds/2.wav");
-    player2.load();
-    player2.play();
-    player2.setSpeed(2);
+  static Future<void> stopRecorder() async {
+    await myRecorder.stopRecorder();
   }
 }

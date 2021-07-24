@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get_done/services/others/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
 
 // ignore: use_key_in_widget_constructors
 class SettingsPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
+    // SettingsWidget();
     super.initState();
   }
 
@@ -94,26 +96,25 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.topCenter,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 30,
-                  ),
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      alignment: Alignment.bottomCenter,
-                      fit: BoxFit.contain,
-                      image: NetworkImage(
-                        getuser.user!.photoURL.toString(),
-                        scale: 100,
-                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 130,
+                  width: 130,
+                  child: OctoImage.fromSet(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      getuser.user!.photoURL.toString(),
                     ),
-                    color: Colors.white,
-                    shape: BoxShape.circle,
+                    octoSet: OctoSet.circleAvatar(
+                      backgroundColor: Colors.grey,
+                      text: Text(""),
+                    ),
                   ),
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
                 SettingsWidget(),
                 const SizedBox(

@@ -167,6 +167,9 @@ class _EditScreenState extends State<EditScreen> {
             ),
             Expanded(
               child: TextField(
+                onTap: () {
+                  editing = !editing;
+                },
                 enabled: editing,
                 maxLines: 8,
                 scrollPhysics: const ClampingScrollPhysics(),

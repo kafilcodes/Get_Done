@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get_done/services/audio/audio.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsv_color_pickers/hsv_color_pickers.dart';
 import 'package:get_done/notes/others/utils.dart';
@@ -17,9 +18,16 @@ class _AddScreenState extends State<AddScreen> {
   String descriptionText = "";
   String tag = "";
   Color updatedColor2 = Color(Colors.redAccent.value);
+  bool recording = false;
+
   @override
   void initState() {
     super.initState();
+    Audio.myRecorder.openAudioSession().then((value) {
+      setState(() {
+        recording = true;
+      });
+    });
     myStyle.textStyle;
     myStyle.textAlign;
     myColor.selectedColor;
@@ -29,6 +37,9 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void dispose() {
     super.dispose();
+    Audio.myRecorder.closeAudioSession();
+    recording = false;
+
     titleText;
     descriptionText;
     updatedColor2;
@@ -60,6 +71,21 @@ class _AddScreenState extends State<AddScreen> {
           ),
         ),
         actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  recording = !recording;
+                });
+                recording ? Audio.record() : Audio.stopRecorder();
+              },
+              icon: Icon(
+                Icons.mic,
+                size: 30,
+                color: recording ? Colors.redAccent : Colors.grey,
+              )),
+          SizedBox(
+            width: 10,
+          ),
           IconButton(
             icon: const Icon(Icons.done, color: Colors.white, size: 30),
             onPressed: () async {

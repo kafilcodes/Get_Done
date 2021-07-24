@@ -48,7 +48,6 @@ class NotesWidgets extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        // snapshot.data.docs[index]['title'],
                         snaps.data!.docs[index]['title'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,

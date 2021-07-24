@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_done/home/others/functions.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get_done/services/audio/audio.dart';
 
 // ignore: must_be_immutable
 class TodoWidget extends StatefulWidget {
@@ -54,12 +53,12 @@ class _TodoWidgetState extends State<TodoWidget> {
             iconColor: Theme.of(context).textTheme.headline2!.color,
             leading: Checkbox(
                 onChanged: (bool? value) {
-                  HapticFeedback.heavyImpact()
-                      .whenComplete(
-                        () => Audio.playsound(),
-                      )
-                      .whenComplete(() => widget.docsnap.reference
-                          .update({"isCompleted": true}));
+                  HapticFeedback.heavyImpact();
+                  // .whenComplete(
+                  //   () => Audio.playsound(),
+                  // )
+                  // .whenComplete(() => widget.docsnap.reference
+                  //     .update({"isCompleted": true}));
                 },
                 value: widget.docsnap["isCompleted"]),
             title: Text(
@@ -73,6 +72,33 @@ class _TodoWidgetState extends State<TodoWidget> {
               ),
             ),
             children: [
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: double.infinity,
+                height: 200,
+                child: ListView.builder(
+                    itemCount: widget.docsnap["subtask"].length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          widget.docsnap["subtask"].keys.elementAt(index),
+                        ),
+                        leading: Checkbox(
+                            onChanged: (bool? value) {
+                              HapticFeedback.heavyImpact();
+
+                              // .whenComplete(
+                              //   () => Audio.playsound(),
+                              // )
+                              // .whenComplete(() => null);
+                            },
+                            value: widget.docsnap["subtask"].values
+                                .elementAt(index)),
+                      );
+                    }),
+              ),
               const SizedBox(
                 height: 5,
               ),
