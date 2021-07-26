@@ -18,27 +18,18 @@ class _AddScreenState extends State<AddScreen> {
   String descriptionText = "";
   String tag = "";
   Color updatedColor2 = Color(Colors.redAccent.value);
-  bool recording = false;
+  final recorder = SoundRecorder();
 
   @override
   void initState() {
     super.initState();
-    Audio.myRecorder.openAudioSession().then((value) {
-      setState(() {
-        recording = true;
-      });
-    });
-    myStyle.textStyle;
-    myStyle.textAlign;
-    myColor.selectedColor;
-    Reference.ref;
+    recorder.init();
   }
 
   @override
   void dispose() {
     super.dispose();
-    Audio.myRecorder.closeAudioSession();
-    recording = false;
+    recorder.dispose();
 
     titleText;
     descriptionText;
@@ -71,18 +62,7 @@ class _AddScreenState extends State<AddScreen> {
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  recording = !recording;
-                });
-                recording ? Audio.record() : Audio.stopRecorder();
-              },
-              icon: Icon(
-                Icons.mic,
-                size: 30,
-                color: recording ? Colors.redAccent : Colors.grey,
-              )),
+          recording(),
           SizedBox(
             width: 10,
           ),
@@ -228,6 +208,23 @@ class _AddScreenState extends State<AddScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget recording() {
+    final recording = recorder.rrecording;
+
+    final rcolor = recording ? Colors.redAccent : Colors.grey;
+    return IconButton(
+      onPressed: () async {
+        final recording = await recorder.toggleRecording();
+        setState(() {});
+      },
+      icon: Icon(
+        Icons.mic,
+        size: 30,
+        color: rcolor,
       ),
     );
   }

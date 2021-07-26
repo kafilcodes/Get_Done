@@ -53,12 +53,8 @@ class _TodoWidgetState extends State<TodoWidget> {
             iconColor: Theme.of(context).textTheme.headline2!.color,
             leading: Checkbox(
                 onChanged: (bool? value) {
-                  HapticFeedback.heavyImpact();
-                  // .whenComplete(
-                  //   () => Audio.playsound(),
-                  // )
-                  // .whenComplete(() => widget.docsnap.reference
-                  //     .update({"isCompleted": true}));
+                  HapticFeedback.heavyImpact().whenComplete(() =>
+                      widget.docsnap.reference.update({"isCompleted": true}));
                 },
                 value: widget.docsnap["isCompleted"]),
             title: Text(
@@ -85,17 +81,25 @@ class _TodoWidgetState extends State<TodoWidget> {
                         title: Text(
                           widget.docsnap["subtask"].keys.elementAt(index),
                         ),
-                        leading: Checkbox(
-                            onChanged: (bool? value) {
-                              HapticFeedback.heavyImpact();
-
-                              // .whenComplete(
-                              //   () => Audio.playsound(),
-                              // )
-                              // .whenComplete(() => null);
-                            },
-                            value: widget.docsnap["subtask"].values
-                                .elementAt(index)),
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.radio_button_unchecked,
+                            color: Theme.of(context).textTheme.headline2!.color,
+                            size: 17,
+                          ),
+                          onPressed: () {},
+                        ),
+                        // leading: Checkbox(
+                        //     onChanged: (bool? value) {
+                        //       HapticFeedback.heavyImpact();
+                        //
+                        //       // .whenComplete(
+                        //       //   () => Audio.playsound(),
+                        //       // )
+                        //       // .whenComplete(() => null);
+                        //     },
+                        //     value: widget.docsnap["subtask"].values
+                        //         .elementAt(index)),
                       );
                     }),
               ),
