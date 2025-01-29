@@ -1,5 +1,6 @@
 # Get Done ✅
 <div align="center">
+  <img src="assets/images/ic_launcher.png" alt="Get Done Logo" width="150" height="150"/>
   <h3>Your All-in-One Productivity Companion</h3>
   <p><em>Notes • Tasks • Focus Timer - Everything you need to stay productive</em></p>
 
